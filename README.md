@@ -26,8 +26,10 @@ Transform vague natural language into **precise, professional-grade prompts** us
 - 🔄 **Smart Toggle** — Only activates when you want it; auto-suggests mode switching
 - ✅ **Confirm Before Execute** — Never applies without your approval
 - 🏗️ **CRAFT Framework** — Every prompt structured with Context, Role, Action, Format, Target Audience
-- 🌍 **Bilingual** — Chinese & English native support
+- 🌍 **Multi-language** — Auto-translates English templates to any language
 - 🤖 **Model-Agnostic** — Works with ChatGPT, Claude, GLM, Gemini, Llama, or any AI
+
+> 💡 **English recommended.** The template library is 99% English. English input gets the best template matching quality. Other languages work but go through an extra translation step — see [Language Support](#-language-support).
 
 ## 📦 Categories
 
@@ -119,12 +121,44 @@ User Input (natural language)
   ├── Full mode + simple task → suggest switching to Lite
   └── Mode matches → proceed
         ↓
-  Step 1: Match against 2,200+ templates
-  Step 2: Apply CRAFT framework
-  Step 3: Show optimized prompt to user
-  Step 4: User confirms / tweaks / cancels
-  Step 5: Final prompt ready to use with any AI
+  Step 1: Understand user intent
+  Step 2: Search & rank templates by quality (0-10 score)
+  ├── Score: structure, specificity, expertise, constraints, usability
+  └── Dedup: keep highest-scoring template per group
+  Step 3: Apply CRAFT framework
+  Step 4: Multi-language adaptation (if user language ≠ template language)
+  Step 5: Show optimized prompt to user
+  Step 6: User confirms / tweaks / cancels
+  Step 7: Final prompt ready to use with any AI
 ```
+
+## 🌍 Language Support
+
+The template library is **99% English** (2,209 English + 12 Chinese). Here's how different languages perform:
+
+| Input Language | Template Matching | Output Quality | Notes |
+|---------------|-------------------|----------------|-------|
+| 🇺🇸 **English** | ⭐⭐⭐⭐⭐ Best | ⭐⭐⭐⭐⭐ | Direct match, no translation needed |
+| 🇨🇳 Chinese | ⭐⭐⭐⭐ Good | ⭐⭐⭐⭐ | Translated from English templates |
+| 🇯🇵 Japanese | ⭐⭐⭐ Good | ⭐⭐⭐⭐ | Translated + localized |
+| 🇪🇸 Spanish | ⭐⭐⭐ Good | ⭐⭐⭐⭐ | Translated + localized |
+| 🇰🇷 Korean | ⭐⭐⭐ Good | ⭐⭐⭐⭐ | Translated + localized |
+| Other languages | ⭐⭐⭐ Good | ⭐⭐⭐ | Works, but quality depends on AI's translation ability |
+
+**How it works for non-English users:**
+1. User writes in their language (e.g. Chinese: "帮我写个登录页")
+2. AI understands the intent and searches English templates
+3. Best template is matched by quality score
+4. Optimized prompt is translated + localized to the user's language
+5. User sees the result in their own language
+
+**Why English is recommended:**
+- Template keywords match directly ("React developer" → exact match)
+- No translation step = faster + more accurate
+- Domain terminology stays precise (no translation ambiguity)
+- The CRAFT structure is preserved perfectly
+
+Non-English works fine for most cases, but if you want the absolute best results, write your request in English.
 
 ## 📝 Example
 
