@@ -5,11 +5,11 @@
 ### AI Prompt Auto-Optimization Skill for OpenClaw
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Templates: 3200+](https://img.shields.io/badge/Templates-3%2C260-green.svg)]()
-[![Sources: 13](https://img.shields.io/badge/Sources-13%20Repos-orange.svg)]()
+[![Templates: 3300+](https://img.shields.io/badge/Templates-3%2C344-green.svg)]()
+[![Sources: 18](https://img.shields.io/badge/Sources-18%20Repos-orange.svg)]()
 [![Languages: Multi](https://img.shields.io/badge/Languages-Multi-blue.svg)]()
 
-Transform vague natural language into **precise, professional-grade prompts** using a curated library of 3,200+ proven templates from 13 major GitHub repositories.
+Transform vague natural language into **precise, professional-grade prompts** using a curated library of 3,300+ proven templates from 18 major GitHub repositories.
 
 **No prompt engineering knowledge required. Just speak naturally.**
 
@@ -21,8 +21,8 @@ Transform vague natural language into **precise, professional-grade prompts** us
 
 ## ✨ Features
 
-- 🧠 **3,200+ Templates** — Largest open-source prompt library in a single skill
-- ⚡ **Two Modes** — Lite (2.6MB, fast) / Full (9.4MB, complete)
+- 🧠 **3,300+ Templates** — Largest open-source prompt library in a single skill
+- ⚡ **Two Modes** — Lite (3.0MB, fast) / Full (9.9MB, complete)
 - 🔄 **Smart Toggle** — Only activates when you want it; auto-suggests mode switching
 - ✅ **Confirm Before Execute** — Never applies without your approval
 - 🏗️ **CRAFT Framework** — Every prompt structured with Context, Role, Action, Format, Target Audience
@@ -35,13 +35,13 @@ Transform vague natural language into **precise, professional-grade prompts** us
 
 | Category | Count | Category | Count |
 |----------|-------|----------|-------|
-| 💻 Coding | 1,779 | 🎨 Art & Entertainment | 422 |
-| ✍️ Writing | 225 | 💼 Business | 89 |
-| 🎓 Education | 90 | 💡 Creative | 71 |
-| 📊 Data Analysis | 76 | 🏥 Health | 58 |
-| 🗣️ Translation | 42 | ⚖️ Legal & Finance | 37 |
-| 🔧 Dev Tools | 35 | 🔬 Science | 26 |
-| 🎯 Consulting | 123 | 📁 Other | 187 |
+| 💻 Coding | 1,672 | 🎨 Art & Entertainment | 404 |
+| ✍️ Writing | 208 | 💼 Business | 108 |
+| 🎓 Education | 117 | 💡 Creative | 73 |
+| 📊 Data Analysis | 73 | 🏥 Health | 82 |
+| 🗣️ Translation | 60 | ⚖️ Legal & Finance | 82 |
+| 🔧 Dev Tools | 37 | 🔬 Science | 61 |
+| 🎯 Consulting | 114 | 📁 Other | 253 |
 
 ## ⚡ Installation
 
@@ -58,8 +58,8 @@ Say **"Enable lite/full prompt optimization"** to activate. Done.
 <summary>📂 Manual download (3 files required)</summary>
 
 1. [`SKILL.md`](./SKILL.md) — Core skill instructions
-2. [`references/prompt_library_lite.json`](./references/prompt_library_lite.json) — Lite mode (2.6MB)
-3. [`references/prompt_library_full.json`](./references/prompt_library_full.json) — Full mode (9.4MB)
+2. [`references/prompt_library_lite.json`](./references/prompt_library_lite.json) — Lite mode (3.0MB)
+3. [`references/prompt_library_full.json`](./references/prompt_library_full.json) — Full mode (9.9MB)
 
 Place them like this:
 ```
@@ -96,7 +96,7 @@ Then pick your tool:
 That's it. `STANDALONE.md` includes:
 - Complete CRAFT optimization framework
 - Auto-loads lite/full template libraries based on task complexity
-- 42 essential templates built-in, 3,200+ available
+- 42 essential templates built-in, 3,300+ available
 
 > **Note:** Copilot cannot auto-read local JSON files — it will use the CRAFT framework without template matching. All other tools auto-load templates.
 
@@ -134,7 +134,7 @@ User Input (natural language)
 
 ## 🌍 Language Support
 
-The template library is **99% English** (3,248 English + 12 Chinese). Here's how different languages perform:
+The template library is **99% English** (3,332 English + 12 Chinese). Here's how different languages perform:
 
 | Input Language | Template Matching | Output Quality | Notes |
 |---------------|-------------------|----------------|-------|
@@ -218,13 +218,14 @@ Each repository contributes different strengths. Together they achieve ~90% inte
 | + TheBigPromptLibrary | 535+ | **78%** (+8pp) |
 | + abilzerian domain-specific | 580+ | **85%** (+7pp) |
 | + Chinese + llm-prompts | 2,221 | **90%** (+5pp) |
-| + QA + DevOps + Game Dev | **3,260** | **95%+** (+5pp) |
+| **3,260** | **95%+** (+5pp) |
+| + cleanup + niche supplements | **3,344** | **95%+** (quality improved) |
 
 ## 🔄 Version Comparison
 
 | | 🪶 Lite | 📚 Full |
 |---|---|---|
-| File Size | 2.6 MB | 9.4 MB |
+| File Size | 3.0 MB | 9.9 MB |
 | Prompt Length | 800 chars (truncated) | Complete, untruncated |
 | Token Cost | Lower | Higher |
 | Best For | Daily quick optimization | Project-level work |
@@ -238,8 +239,8 @@ prompt-optimizer-skill/
 ├── README.md                             # This file
 ├── LICENSE                               # MIT
 ├── references/
-│   ├── prompt_library_lite.json          # 3,260 templates, truncated (2.6 MB)
-│   └── prompt_library_full.json          # 3,260 templates, complete (9.4 MB)
+│   ├── prompt_library_lite.json          # 3,344 templates, truncated (3.0 MB)
+│   └── prompt_library_full.json          # 3,344 templates, complete (9.9 MB)
 └── scripts/                              # (reserved for future tools)
 ```
 
