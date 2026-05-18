@@ -57,12 +57,12 @@ Parse the user's raw input. Identify:
 
 #### Step 2: Load Templates
 
-You have access to these template libraries (already downloaded, located in the same repo):
+You have access to these template libraries (already downloaded, locate them relative to this STANDALONE.md file):
 
 | File | Size | When to use |
 |------|------|------------|
-| `references/prompt_library_lite.json` | 1.9 MB | Default for optimization — 2,221 templates |
-| `references/prompt_library_full.json` | 8.5 MB | For complex tasks — full untruncated prompts |
+| `references/prompt_library_lite.json` | 3.0 MB | Default for optimization — 3,344 templates |
+| `references/prompt_library_full.json` | 9.9 MB | For complex tasks — full untruncated prompts |
 
 **Auto-loading rules:**
 1. For simple tasks → read `prompt_library_lite.json`, search for matches
@@ -197,15 +197,15 @@ prompt-optimizer-skill/
 ├── SKILL.md                               ← OpenClaw version
 ├── README.md
 ├── references/
-│   ├── prompt_library_lite.json           ← 2,221 templates, truncated (1.9 MB)
-│   └── prompt_library_full.json           ← 2,221 templates, complete (8.5 MB)
+│   ├── prompt_library_lite.json           ← 3,344 templates, truncated (3.0 MB)
+│   └── prompt_library_full.json           ← 3,344 templates, complete (9.9 MB)
 ```
 
 ### Which library to use?
 
 | File | Size | Best For |
 |------|------|----------|
-| `prompt_library_lite.json` | 1.9 MB | Broad coverage, fast |
-| `prompt_library_full.json` | 8.5 MB | Maximum quality, no truncation |
+| `prompt_library_lite.json` | 3.0 MB | Broad coverage, fast |
+| `prompt_library_full.json` | 9.9 MB | Maximum quality, no truncation |
 
 The AI auto-selects based on task complexity.
