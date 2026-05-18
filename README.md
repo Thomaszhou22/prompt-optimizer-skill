@@ -116,7 +116,13 @@ You: Help me write a market research report
 ```
 User Input (natural language)
         ↓
-  Step 0: Complexity Check
+  Step 0: Activate (optional, disabled by default to save tokens)
+  ├── "Enable prompt optimization" → Turn on with Lite mode
+  ├── "Enable full prompt optimization" → Turn on with Full mode
+  ├── "Disable prompt optimization" → Turn off
+  └── Already on → proceed
+        ↓
+  Step 0b: Complexity Check
   ├── Lite mode + complex task → suggest switching to Full
   ├── Full mode + simple task → suggest switching to Lite
   └── Mode matches → proceed
@@ -130,6 +136,7 @@ User Input (natural language)
   Step 5: Show optimized prompt to user
   Step 6: User confirms / tweaks / cancels
   Step 7: Final prompt ready to use with any AI
+  Step 8: "Disable prompt optimization" to turn off when done
 ```
 
 ## 🌍 Language Support
