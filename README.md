@@ -131,6 +131,7 @@ User Input (natural language)
   Step 2: Search & rank templates by quality (0-10 score)
   ├── Score: structure, specificity, expertise, constraints, usability
   └── Dedup: keep highest-scoring template per group
+  ├── No match found (>30% similarity)? → fallback to CRAFT-only optimization
   Step 3: Apply CRAFT framework
   Step 4: Multi-language adaptation (if user language ≠ template language)
   Step 5: Show optimized prompt to user
