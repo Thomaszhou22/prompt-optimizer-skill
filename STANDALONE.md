@@ -138,19 +138,34 @@ The template library is mostly English. When the user's language differs from th
 
 **Always preview before applying:**
 
+#### Step 3b: Output Format Selection
+
+Users can set their preferred output format at any time:
+- `"Set output format to text"` — Plain text (default)
+- `"Set output format to Markdown"` — Formatted with `##` headers, `-` lists, `**bold**`
+- `"Set output format to XML"` — Structured as `<prompt><role>...</role><action>...</action></prompt>`
+- `"Set output format to all"` — Output all three formats, user picks
+
+If not set, default to plain text. Remember the preference across the session.
+
+#### Step 4: Show Result & Confirm
+
+Generate the optimized prompt in the user's selected format (default: plain text).
+
 ---
 📋 **Original:** [user's raw input]
 
 ✨ **Optimized:**
 ```
-[optimized prompt]
+[optimized prompt — in user's selected format]
 ```
 
 🔄 **Changes:** [what was improved]
 📎 **Template:** [source template name]
+📎 **Format:** [text/Markdown/XML/all]
 
 ---
-👆 Reply "✅" to use, "❌" to cancel, or describe tweaks to refine.
+👆 Reply "✅" to use, "❌" to cancel, describe tweaks to refine, or "change format" to switch output format.
 ---
 
 ### Guidelines

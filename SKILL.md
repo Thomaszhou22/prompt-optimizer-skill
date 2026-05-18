@@ -18,15 +18,22 @@ description: Transform vague user requests into precise, high-quality prompts by
 | 开启（完整版） | "开启完整版提示词优化" |
 | 关闭 | "关闭提示词优化"、"turn off prompt optimizer" |
 | 切换版本 | "切换到简易版" / "切换到完整版" |
+| 设置输出格式 | "输出格式设为 Markdown/XML/纯文本/全部" |
 
 **版本区别：**
 - **简易版**（`references/prompt_library_lite.json`，~1.8MB，每条截断 800 字符）：日常快速优化
 - **完整版**（`references/prompt_library_full.json`，~8MB，完整不截断）：正式项目，高质量输出
 
-无版本指定时默认简易版。状态持久化到 `memory/prompt_optimizer_state.json`：
+无版本指定时默认简易版。输出格式默认纯文本。状态持久化到 `memory/prompt_optimizer_state.json`：
 ```json
-{"enabled": true, "mode": "lite", "turned_on_at": "2026-05-18T17:00:00+08:00"}
+{"enabled": true, "mode": "lite", "output_format": "text", "turned_on_at": "2026-05-18T17:00:00+08:00"}
 ```
+
+**输出格式说明：**
+- **纯文本**（默认）：直接输出 prompt 内容
+- **Markdown**：用 `##` 标题、`-` 列表、`**加粗**` 等格式包裹
+- **XML**：用 `<prompt><role>...</role><action>...</action></prompt>` 结构包裹
+- **全部**：同时输出三种格式，用户自选
 
 **判断逻辑：** 收到消息 → 检查状态文件 → 开关/切换指令则更新状态 → 关闭中则忽略 → 开启中则执行下方工作流。
 
@@ -85,19 +92,22 @@ description: Transform vague user requests into precise, high-quality prompts by
 
 ### Step 5: 确认流程（必须执行）
 
+根据用户设定的输出格式（默认纯文本）生成对应格式的提示词。
+
 ---
 📋 **原始输入：** [用户原话]
 
 ✨ **优化后的提示词：**
 ```
-[完整提示词]
+[完整提示词 — 按用户设定的格式输出]
 ```
 
 🔄 **改动说明：** [1-2 句]  📎 **参考模板：** [模板名]
+📎 **输出格式：** [纯文本/Markdown/XML/全部]
 
 ---
 
-👆 回复 "✅" 确认使用 / "❌" 放弃用原始输入 / 提修改意见微调
+👆 回复 "✅" 确认使用 / "❌" 放弃用原始输入 / 提修改意见微调 / "换格式" 更改输出格式
 
 等待用户回复后再执行。
 
