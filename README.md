@@ -205,17 +205,43 @@ prompt-optimizer-skill/
 
 ## 🤝 Contributing
 
-Contributions welcome! Especially:
+We welcome prompt contributions!
 
-- **Chinese prompts** — we need more native Chinese templates
-- **New categories** — education, healthcare, legal domain expertise
-- **Quality improvements** — better categorization, deduplication
+### Submit a new prompt
 
-### How to contribute
+**Option 1: Open an Issue (easiest)**
+1. Go to [Issues](https://github.com/Thomaszhou22/prompt-optimizer-skill/issues/new)
+2. Title: `Prompt: [role name]`
+3. Paste in this format:
+```
+Act: [Role name, e.g. "Senior React Developer"]
+Prompt: [The full prompt text]
+Category: [Coding / Writing / Education / Business / Health / etc.]
+Language: [en / zh]
+```
 
+**Option 2: Submit a Pull Request**
 1. Fork this repo
-2. Add/edit prompts in `references/prompt_library_lite.json` and `prompt_library_full.json`
-3. Submit a PR
+2. Add your prompt to **both** JSON files:
+   - `references/prompt_library_lite.json`
+   - `references/prompt_library_full.json`
+3. Follow the existing structure:
+```json
+{
+  "id": "unique10ch",
+  "act": "Role Name",
+  "act_zh": "角色中文名",
+  "prompt": "Full prompt text...",
+  "category": "Coding",
+  "source": "community/your-github-username",
+  "lang": "en"
+}
+```
+4. Submit PR
+
+### Edit an existing prompt
+
+Open an Issue describing the change, or submit a PR directly.
 
 ## 📄 License
 
