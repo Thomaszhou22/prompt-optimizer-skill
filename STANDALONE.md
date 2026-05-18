@@ -79,6 +79,22 @@ Search for the 1-3 most relevant templates by:
 
 Categories: Coding | Writing | Education | Business | Health | Dev Tools | Translation | Art & Entertainment | Consulting | Creative | Data Analysis | Science | Legal & Finance | Other
 
+#### Step 2b: Rank by Quality
+
+Score each matched template on a 0-10 scale:
+
+| Dimension | 2pts | 1pt | 0pts |
+|-----------|------|------|------|
+| **Structure** | Clear role + steps + format | Partial structure | Just one sentence |
+| **Specificity** | Detailed, actionable steps | Vague direction | Generic |
+| **Expertise** | Domain terms, experience years | Mentions expertise | Just "You are an expert" |
+| **Constraints** | Explicit boundaries (length, format, tone) | Few constraints | None |
+| **Usability** | Ready to use as-is | Needs minor tweaks | Just a direction |
+
+**Deduplication:** When multiple templates are >70% similar, keep only the **highest-scoring** one (not the longest).
+
+Final output: 1 best template, or 2-3 complementary ones covering different angles.
+
 #### Step 3: Apply CRAFT Framework
 
 Merge user intent with the best template:
