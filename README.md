@@ -214,9 +214,8 @@ Contributions welcome! Especially:
 ### How to contribute
 
 1. Fork this repo
-2. Add/edit prompts in the JSON library
-3. Run `python3 scripts/validate.py` (coming soon)
-4. Submit a PR
+2. Add/edit prompts in `references/prompt_library_lite.json` and `prompt_library_full.json`
+3. Submit a PR
 
 ## 📄 License
 
