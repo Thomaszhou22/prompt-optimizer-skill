@@ -52,8 +52,43 @@ git clone https://github.com/Thomaszhou22/prompt-optimizer-skill.git
 cp -r prompt-optimizer-skill/ ~/.config/openclaw/skills/prompt-optimizer/
 ```
 
+### For Non-OpenClaw Users (Claude Code, Cursor, etc.)
+
+The prompt library is **pure JSON data** — you can use it anywhere:
+
+```bash
+# Just download the library file you need
+curl -O https://raw.githubusercontent.com/Thomaszhou22/prompt-optimizer-skill/main/references/prompt_library_lite.json
+
+# Then load it in your own script or workflow
+python3 -c "import json; lib = json.load(open('prompt_library_lite.json')); print(f'{len(lib["prompts"])} prompts loaded')"
+```
+
+The JSON structure is straightforward:
+```json
+{
+  "prompts": [
+    {
+      "id": "abc123",
+      "act": "Python Developer",
+      "act_zh": "Python开发者",
+      "prompt": "You are an expert Python developer...",
+      "category": "Coding",
+      "source": "ai-boost/awesome-prompts",
+      "lang": "en"
+    }
+  ]
+}
+```
+
+You can:
+- **Search by category** — filter `"category": "Coding"`
+- **Search by keyword** — match against `"act"` or `"prompt"` fields
+- **Use as RAG context** — feed matching prompts into any AI as examples
+- **Build your own optimizer** — use the CRAFT framework from SKILL.md
+
 <details>
-<summary>📂 Alternative: Manual download (3 files required)</summary>
+<summary>📂 Alternative: Manual download (OpenClaw users)</summary>
 
 You need ALL of these files:
 1. [`SKILL.md`](./SKILL.md) — Core skill instructions
