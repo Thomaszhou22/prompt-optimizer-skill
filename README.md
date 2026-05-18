@@ -41,65 +41,20 @@ Transform vague natural language into **precise, professional-grade prompts** us
 | 🔧 Dev Tools | 31 | 🔬 Science | 26 |
 | 🎯 Consulting | 115 | 📁 Other | 150 |
 
-## ⚡ Quick Start
+## ⚡ Installation
 
-### 1. Install
+### 👉 OpenClaw Users
+
 ```bash
-# Clone the repo
 git clone https://github.com/Thomaszhou22/prompt-optimizer-skill.git
-
-# Copy to your OpenClaw skills directory
 cp -r prompt-optimizer-skill/ ~/.config/openclaw/skills/prompt-optimizer/
 ```
 
-### For Non-OpenClaw Users (Claude Code, Cursor, etc.)
-
-**Fastest way — use the Standalone Edition:**
-```bash
-git clone https://github.com/Thomaszhou22/prompt-optimizer-skill.git
-# Then:
-cat prompt-optimizer-skill/STANDALONE.md >> /your-project/CLAUDE.md
-```
-
-That's it. `STANDALONE.md` includes:
-- Complete optimization instructions (CRAFT framework)
-- 42 curated essential templates (130 KB, built-in)
-- Works with Claude Code, Cursor, Windsurf, Aider, or any tool
+Say **"Enable lite/full prompt optimization"** to activate. Done.
 
 <details>
-<summary>📚 Want more templates? Use the full library</summary>
+<summary>📂 Manual download (3 files required)</summary>
 
-The standalone edition has 42 templates. For 2,200+ templates:
-
-```bash
-# Download a bigger library
-curl -O https://raw.githubusercontent.com/Thomaszhou22/prompt-optimizer-skill/main/references/prompt_library_lite.json
-
-# Then tell your AI: "Read prompt_library_lite.json and optimize my prompt"
-```
-
-JSON structure:
-```json
-{
-  "prompts": [
-    {
-      "id": "abc123",
-      "act": "Python Developer",
-      "act_zh": "Python开发者",
-      "prompt": "You are an expert Python developer...",
-      "category": "Coding",
-      "source": "ai-boost/awesome-prompts",
-      "lang": "en"
-    }
-  ]
-}
-```
-</details>
-
-<details>
-<summary>📂 Alternative: Manual download (OpenClaw users)</summary>
-
-You need ALL of these files:
 1. [`SKILL.md`](./SKILL.md) — Core skill instructions
 2. [`references/prompt_library_lite.json`](./references/prompt_library_lite.json) — Lite mode (1.9MB)
 3. [`references/prompt_library_full.json`](./references/prompt_library_full.json) — Full mode (8.5MB)
@@ -112,13 +67,38 @@ your-skills-dir/prompt-optimizer/
     ├── prompt_library_lite.json
     └── prompt_library_full.json
 ```
-> ⚠️ SKILL.md alone won't work — it needs the JSON libraries.
 </details>
 
-### 2. Activate
-Say any of these to your OpenClaw assistant:
-- **"Enable lite prompt optimization"** → Lite mode (fast, saves tokens)
-- **"Enable full prompt optimization"** → Full mode (maximum quality)
+---
+
+### 👉 Other AI Tool Users
+
+Works with **Claude Code · Cursor · Windsurf · Gemini CLI · Aider · Cline · Copilot**
+
+```bash
+git clone https://github.com/Thomaszhou22/prompt-optimizer-skill.git
+```
+
+Then pick your tool:
+
+| Tool | Command |
+|------|----------|
+| **Claude Code** | `cat STANDALONE.md >> /your-project/CLAUDE.md` |
+| **Cursor** | `cat STANDALONE.md >> /your-project/.cursorrules` |
+| **Windsurf** | `cat STANDALONE.md >> /your-project/.windsurfrules` |
+| **Gemini CLI** | `cat STANDALONE.md >> /your-project/GEMINI.md` |
+| **Aider** | `cat STANDALONE.md >> /your-project/.aider.conventions.md` |
+| **Cline** | `cat STANDALONE.md >> /your-project/.clinerules` |
+| **Copilot** | `cat STANDALONE.md >> /your-project/.github/copilot-instructions.md` |
+
+That's it. `STANDALONE.md` includes:
+- Complete CRAFT optimization framework
+- Auto-loads lite/full template libraries based on task complexity
+- 42 essential templates built-in, 2,200+ available
+
+> **Note:** Copilot cannot auto-read local JSON files — it will use the CRAFT framework without template matching. All other tools auto-load templates.
+
+---
 
 ### 3. Use
 Just talk naturally:
@@ -212,12 +192,14 @@ Each repository contributes different strengths. Together they achieve ~90% inte
 
 ```
 prompt-optimizer-skill/
-├── SKILL.md                              # Core skill instructions (9.1 KB)
+├── SKILL.md                              # OpenClaw skill instructions
+├── STANDALONE.md                         # Non-OpenClaw instructions (Claude Code, Cursor, etc.)
 ├── README.md                             # This file
 ├── LICENSE                               # MIT
 ├── references/
-│   ├── prompt_library_lite.json          # Lite mode (1.9 MB)
-│   └── prompt_library_full.json          # Full mode (8.5 MB)
+│   ├── prompt_library_standalone.json    # 42 essential templates (130 KB)
+│   ├── prompt_library_lite.json          # 2,221 templates, truncated (1.9 MB)
+│   └── prompt_library_full.json          # 2,221 templates, complete (8.5 MB)
 └── scripts/                              # (reserved for future tools)
 ```
 
