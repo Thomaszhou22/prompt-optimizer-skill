@@ -93,14 +93,16 @@ Merge user intent with the best template:
 
 The template library is mostly English. When the user's language differs from the matched template:
 
-1. **Detect user language** from input
+1. **Detect user language** from input — supports ANY language (Chinese, Japanese, Korean, Spanish, French, German, Russian, Portuguese, Arabic, Italian, Thai, Vietnamese, Indonesian, and more)
 2. **Translate the optimized prompt** to match user's language
 3. **Localize, don't just translate:**
-   - Adapt professional terminology (e.g. "Full-Stack Developer" → "全栈开发者")
+   - Adapt professional terminology to local equivalents
    - Adapt cultural references and analogies
    - Keep widely-used English technical terms (API, CSS, React)
    - Preserve CRAFT structure and all numbered steps
+   - Match tone/formality appropriate for that culture
 4. If user asks for bilingual → provide both versions
+5. If user writes in mixed language (e.g. Spanglish) → match their style
 
 #### Step 5: Enhance
 
