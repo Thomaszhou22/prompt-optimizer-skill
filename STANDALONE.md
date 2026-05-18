@@ -89,7 +89,20 @@ Merge user intent with the best template:
 - **Format**: Output structure (table, code block, bullet list, etc.)
 - **Target Audience**: Who consumes the output
 
-#### Step 4: Enhance
+#### Step 4: Multi-language Adaptation
+
+The template library is mostly English. When the user's language differs from the matched template:
+
+1. **Detect user language** from input
+2. **Translate the optimized prompt** to match user's language
+3. **Localize, don't just translate:**
+   - Adapt professional terminology (e.g. "Full-Stack Developer" → "全栈开发者")
+   - Adapt cultural references and analogies
+   - Keep widely-used English technical terms (API, CSS, React)
+   - Preserve CRAFT structure and all numbered steps
+4. If user asks for bilingual → provide both versions
+
+#### Step 5: Enhance
 
 1. Replace vague words with precise instructions
 2. Add constraints (word count, format, tone)
