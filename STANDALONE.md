@@ -5,20 +5,29 @@
 
 ## Quick Setup (30 seconds)
 
-### Claude Code
-```bash
-# Option 1: Copy to your project
-cp STANDALONE.md /your-project/CLAUDE.md
+### All supported tools
 
-# Option 2: Append to existing CLAUDE.md
-cat STANDALONE.md >> /your-project/CLAUDE.md
+| Tool | Config file | Command |
+|------|------------|----------|
+| **Claude Code** | `CLAUDE.md` | `cat STANDALONE.md >> /your-project/CLAUDE.md` |
+| **Cursor** | `.cursorrules` | `cat STANDALONE.md >> /your-project/.cursorrules` |
+| **Windsurf** | `.windsurfrules` | `cat STANDALONE.md >> /your-project/.windsurfrules` |
+| **Gemini CLI** | `GEMINI.md` | `cat STANDALONE.md >> /your-project/GEMINI.md` |
+| **Aider** | Conventions file | `cat STANDALONE.md >> /your-project/.aider.conventions.md` |
+| **Cline** | `.clinerules` | `cat STANDALONE.md >> /your-project/.clinerules` |
+| **Copilot** | `.github/copilot-instructions.md` | `cat STANDALONE.md >> /your-project/.github/copilot-instructions.md` |
+
+### One-line install (any tool)
+```bash
+git clone https://github.com/Thomaszhou22/prompt-optimizer-skill.git
+# Then pick your tool:
+cat prompt-optimizer-skill/STANDALONE.md >> /your-project/CLAUDE.md       # Claude Code
+cat prompt-optimizer-skill/STANDALONE.md >> /your-project/.cursorrules    # Cursor
+cat prompt-optimizer-skill/STANDALONE.md >> /your-project/.windsurfrules  # Windsurf
+cat prompt-optimizer-skill/STANDALONE.md >> /your-project/GEMINI.md       # Gemini CLI
 ```
 
-### Cursor / Windsurf
-Add the contents of this file to your `.cursorrules` or `.windsurfrules`.
-
-### Any other tool
-Copy-paste the "Instructions" section below into your system prompt or rules file.
+> **Note:** For Copilot, the AI cannot auto-read local JSON files. It will use the CRAFT framework and instructions but without template matching. All other tools can auto-read the template libraries.
 
 ---
 
