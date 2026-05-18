@@ -61,7 +61,6 @@ You have access to these template libraries (already downloaded, located in the 
 
 | File | Size | When to use |
 |------|------|------------|
-| `references/prompt_library_standalone.json` | 130 KB | Always loaded — 42 essential templates |
 | `references/prompt_library_lite.json` | 1.9 MB | Default for optimization — 2,221 templates |
 | `references/prompt_library_full.json` | 8.5 MB | For complex tasks — full untruncated prompts |
 
@@ -198,7 +197,6 @@ prompt-optimizer-skill/
 ├── SKILL.md                               ← OpenClaw version
 ├── README.md
 ├── references/
-│   ├── prompt_library_standalone.json     ← 42 essential templates (130 KB)
 │   ├── prompt_library_lite.json           ← 2,221 templates, truncated (1.9 MB)
 │   └── prompt_library_full.json           ← 2,221 templates, complete (8.5 MB)
 ```
@@ -207,8 +205,7 @@ prompt-optimizer-skill/
 
 | File | Size | Best For |
 |------|------|----------|
-| `prompt_library_standalone.json` | 130 KB | Most users — 42 curated essentials |
 | `prompt_library_lite.json` | 1.9 MB | Broad coverage, fast |
 | `prompt_library_full.json` | 8.5 MB | Maximum quality, no truncation |
 
-Start with standalone. Upgrade to lite/full if you need more variety.
+The AI auto-selects based on task complexity.

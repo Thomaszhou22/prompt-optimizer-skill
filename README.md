@@ -231,7 +231,6 @@ prompt-optimizer-skill/
 ├── README.md                             # This file
 ├── LICENSE                               # MIT
 ├── references/
-│   ├── prompt_library_standalone.json    # 42 essential templates (130 KB)
 │   ├── prompt_library_lite.json          # 2,221 templates, truncated (1.9 MB)
 │   └── prompt_library_full.json          # 2,221 templates, complete (8.5 MB)
 └── scripts/                              # (reserved for future tools)
