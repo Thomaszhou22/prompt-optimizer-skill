@@ -21,7 +21,7 @@ Transform vague natural language into **precise, professional-grade prompts** us
 
 ## ✨ Features
 
-- 🧠 **3,300+ Templates** — Largest open-source prompt library in a single skill
+- 🧠 **3,300+ Templates** — Largest open-source prompt library in a single skill (no other skill combines this many templates with auto-matching)
 - ⚡ **Two Modes** — Lite (3.0MB, fast) / Full (9.9MB, complete)
 - 🔄 **Smart Toggle** — Only activates when you want it; auto-suggests mode switching
 - ✅ **Confirm Before Execute** — Never applies without your approval
