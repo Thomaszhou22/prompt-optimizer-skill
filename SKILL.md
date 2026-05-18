@@ -1,6 +1,7 @@
 ---
 name: prompt-optimizer
-description: Transform vague user requests into precise, high-quality prompts by matching against a curated library of 2000+ proven prompt templates. Only activates when the user explicitly turns it on.
+version: 3.0.0
+description: Transform vague user requests into precise, high-quality prompts by matching against a curated library of 3300+ proven prompt templates. Only activates when the user explicitly turns it on.
 ---
 
 # Prompt Optimizer
