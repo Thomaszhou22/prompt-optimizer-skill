@@ -33,13 +33,13 @@ Transform vague natural language into **precise, professional-grade prompts** us
 
 | Category | Count | Category | Count |
 |----------|-------|----------|-------|
-| 💻 编程开发 / Coding | 893 | 🎨 艺术娱乐 / Art & Entertainment | 393 |
-| ✍️ 写作创作 / Writing | 203 | 💼 商业职场 / Business | 64 |
-| 🎓 教育学习 / Education | 82 | 💡 创意生成 / Creative | 60 |
-| 📊 数据分析 / Data Analysis | 72 | 🏥 生活健康 / Health | 54 |
-| 🗣️ 语言翻译 / Translation | 42 | ⚖️ 法律金融 / Legal & Finance | 36 |
-| 🔧 技术工具 / Dev Tools | 31 | 🔬 科学研究 / Science | 26 |
-| 🎯 顾问咨询 / Consulting | 115 | 📁 其他 / Other | 150 |
+| 💻 Coding | 893 | 🎨 Art & Entertainment | 393 |
+| ✍️ Writing | 203 | 💼 Business | 64 |
+| 🎓 Education | 82 | 💡 Creative | 60 |
+| 📊 Data Analysis | 72 | 🏥 Health | 54 |
+| 🗣️ Translation | 42 | ⚖️ Legal & Finance | 36 |
+| 🔧 Dev Tools | 31 | 🔬 Science | 26 |
+| 🎯 Consulting | 115 | 📁 Other | 150 |
 
 ## ⚡ Quick Start
 
@@ -73,13 +73,13 @@ your-skills-dir/prompt-optimizer/
 
 ### 2. Activate
 Say any of these to your OpenClaw assistant:
-- **"开启简易版提示词优化"** → Lite mode (fast, saves tokens)
-- **"开启完整版提示词优化"** → Full mode (maximum quality)
+- **"Enable lite prompt optimization"** → Lite mode (fast, saves tokens)
+- **"Enable full prompt optimization"** → Full mode (maximum quality)
 
 ### 3. Use
 Just talk naturally:
 ```
-You: 帮我写一份市场调研报告
+You: Help me write a market research report
 → Skill outputs an optimized, structured prompt
 → You confirm / tweak / cancel
 → Use the optimized prompt with any AI
@@ -104,26 +104,32 @@ User Input (natural language)
 
 ## 📝 Example
 
-**Input:** `我想学Python`
+**Input:** `I want to learn Python`
 
 **Output:**
 ```
-你是一位资深 Python 编程导师，拥有超过 15 年的编程教学经验。
+You are a senior Python programming instructor with over 15 years of
+teaching experience and a full-stack development background.
 
-【背景】用户是编程初学者，希望从零开始系统学习 Python。
+[Context] The user is a programming beginner wanting to systematically
+learn Python from scratch.
 
-【角色】你善于将复杂概念用简单类比解释，注重实践而非纯理论。
+[Role] You excel at explaining complex concepts with simple analogies,
+emphasizing hands-on practice over pure theory.
 
-【步骤】
-1. 先了解学员的基础水平和学习目标
-2. 制定个性化学习路线图：基础语法 → 数据结构 → 函数与模块 → 项目实战
-3. 每个知识点先用生活类比解释，再给代码示例
-4. 每节课末尾布置小练习（带参考答案）
-5. 遇到错误时引导学员自己发现 bug
+[Action]
+1. Assess the learner's current level and learning goals
+2. Build a personalized roadmap: basics → data structures → functions
+   & modules → real projects
+3. For each concept, explain with a real-life analogy first, then show
+   a code example
+4. End each lesson with a small exercise (with reference answer)
+5. When errors occur, guide the learner to discover bugs themselves
 
-【格式】代码用 ```python 代码块，重点 **加粗**，每阶段推荐时长和里程碑
+[Format] Code in ```python blocks, key points **bold**, recommended
+time and milestones for each stage.
 
-【受众】零基础编程初学者
+[Target Audience] Complete programming beginners.
 ```
 
 ## 📊 Data Sources & Impact
@@ -136,7 +142,7 @@ Each repository contributes different strengths. Together they achieve ~90% inte
 | [ai-boost/awesome-prompts](https://github.com/ai-boost/awesome-prompts) | 221 | Detailed multi-paragraph | **Depth** — full specifications, not one-liners |
 | [0xeb/TheBigPromptLibrary](https://github.com/0xeb/TheBigPromptLibrary) | 115 | Production system prompts | **Real patterns** — how ChatGPT/v0/Manus actually prompt |
 | [abilzerian/LLM-Prompt-Library](https://github.com/abilzerian/LLM-Prompt-Library) | 47 | Domain-specific | **Expertise** — finance, legal, medical terminology |
-| [Vipuser2023/chatgpt-prompts-chinese](https://github.com/Vipuser2023/chatgpt-prompts-chinese) | 12 | Chinese-native | **中文原生** — not translated, natively written |
+| [Vipuser2023/chatgpt-prompts-chinese](https://github.com/Vipuser2023/chatgpt-prompts-chinese) | 12 | Chinese-native | **Native Chinese** — not translated, natively written |
 | [jamesponddotco/llm-prompts](https://github.com/jamesponddotco/llm-prompts) | 32 | Structured, concise | **Formatting** — clean prompt patterns |
 
 ### Cumulative Quality Improvement
