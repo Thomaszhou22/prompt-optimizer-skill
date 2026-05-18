@@ -46,9 +46,24 @@ Parse the user's raw input. Identify:
 - **Role needed**: What kind of expert
 - **Constraints**: Format, language, audience
 
-#### Step 2: Match Template
+#### Step 2: Load Templates
 
-Read `references/prompt_library_standalone.json` and search for the 1-3 most relevant templates. Match by:
+You have access to these template libraries (already downloaded, located in the same repo):
+
+| File | Size | When to use |
+|------|------|------------|
+| `references/prompt_library_standalone.json` | 130 KB | Always loaded — 42 essential templates |
+| `references/prompt_library_lite.json` | 1.9 MB | Default for optimization — 2,221 templates |
+| `references/prompt_library_full.json` | 8.5 MB | For complex tasks — full untruncated prompts |
+
+**Auto-loading rules:**
+1. For simple tasks → read `prompt_library_lite.json`, search for matches
+2. For complex tasks (multi-step, reports, architecture, research) → read `prompt_library_full.json`
+3. If the lite version's matched template seems truncated or incomplete → automatically re-read from `prompt_library_full.json`
+
+You do NOT need to ask the user which library to use. Decide automatically based on task complexity.
+
+Search for the 1-3 most relevant templates by:
 - Role name similarity
 - Keyword overlap
 - Category alignment
