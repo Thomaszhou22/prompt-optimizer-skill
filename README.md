@@ -54,17 +54,30 @@ cp -r prompt-optimizer-skill/ ~/.config/openclaw/skills/prompt-optimizer/
 
 ### For Non-OpenClaw Users (Claude Code, Cursor, etc.)
 
-The prompt library is **pure JSON data** — you can use it anywhere:
+The prompt library is **pure JSON data** — you can use it anywhere.
 
+**Option A: Use with CLAUDE.md (Claude Code)**
 ```bash
-# Just download the library file you need
+# 1. Clone the repo
+git clone https://github.com/Thomaszhou22/prompt-optimizer-skill.git
+cd prompt-optimizer-skill
+
+# 2. Add to your project's CLAUDE.md
+cat SKILL.md >> /your-project/CLAUDE.md
+```
+> ⚠️ The SKILL.md references JSON library files. For Claude Code to access them,
+> you need to mention the file path in your prompt (e.g., "read references/prompt_library_lite.json and optimize my prompt").
+
+**Option B: Use the JSON library directly (any environment)**
+```bash
+# Download the library file
 curl -O https://raw.githubusercontent.com/Thomaszhou22/prompt-optimizer-skill/main/references/prompt_library_lite.json
 
-# Then load it in your own script or workflow
-python3 -c "import json; lib = json.load(open('prompt_library_lite.json')); print(f'{len(lib["prompts"])} prompts loaded')"
+# Load it in Python
+python3 -c "import json; lib = json.load(open('prompt_library_lite.json')); print(f'{len(lib[\"prompts\"])} prompts loaded')"
 ```
 
-The JSON structure is straightforward:
+The JSON structure:
 ```json
 {
   "prompts": [
@@ -81,7 +94,7 @@ The JSON structure is straightforward:
 }
 ```
 
-You can:
+Use cases:
 - **Search by category** — filter `"category": "Coding"`
 - **Search by keyword** — match against `"act"` or `"prompt"` fields
 - **Use as RAG context** — feed matching prompts into any AI as examples
