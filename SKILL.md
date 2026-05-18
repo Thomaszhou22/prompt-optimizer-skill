@@ -57,6 +57,13 @@ description: Transform vague user requests into precise, high-quality prompts by
 
 分类：编程开发 | 写作创作 | 教育学习 | 商业职场 | 生活健康 | 技术工具 | 语言翻译 | 艺术娱乐 | 顾问咨询 | 创意生成 | 数据分析 | 科学研究 | 法律金融 | 其他
 
+### Step 2b: 匹配失败兜底
+
+若搜索后无合适模板（相似度均 < 30%），**不要强行匹配**，而是：
+1. 告知用户：「当前库中没有高度匹配的模板，将直接用 CRAFT 框架优化你的原始输入。」
+2. 跳过模板融合，直接基于 CRAFT 框架 + 用户意图生成优化 prompt
+3. 继续正常确认流程
+
 ### Step 3: CRAFT 框架组合
 
 融合用户意图与最佳模板，应用 CRAFT：

@@ -94,6 +94,13 @@ Score each matched template on a 0-10 scale:
 
 Final output: 1 best template, or 2-3 complementary ones covering different angles.
 
+#### Step 2c: No Match Fallback
+
+If no suitable template is found (all similarity < 30%):
+1. Tell the user: "No highly matching template found in the library. Optimizing directly with CRAFT framework."
+2. Skip template fusion, generate optimized prompt using CRAFT + user intent only
+3. Continue normal confirmation flow
+
 #### Step 3: Apply CRAFT Framework
 
 Merge user intent with the best template:
