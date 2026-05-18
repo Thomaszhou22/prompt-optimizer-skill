@@ -116,14 +116,32 @@ ChatGPT, Claude, GLM, Gemini, Llama, Mistral, local models, anything.
 
 ## Installation
 
-### As an OpenClaw Skill
+### Option 1: Clone the whole repo (recommended)
 ```bash
-# Copy to your skills directory
+git clone https://github.com/Thomaszhou22/prompt-optimizer-skill.git
+# Then copy to your OpenClaw skills directory:
 cp -r prompt-optimizer-skill/ ~/.config/openclaw/skills/prompt-optimizer/
 ```
 
-### Standalone
-Clone this repo and use `SKILL.md` + `references/prompt_library_*.json` in your own workflow.
+### Option 2: Download as ZIP
+Go to [Releases](https://github.com/Thomaszhou22/prompt-optimizer-skill/releases) or click **Code → Download ZIP** on the repo page.
+
+### Option 3: Manual download (3 files required)
+You need ALL of these files, not just SKILL.md:
+1. [`SKILL.md`](./SKILL.md) — Core skill instructions
+2. [`references/prompt_library_lite.json`](./references/prompt_library_lite.json) — Lite mode prompt library (1.9MB)
+3. [`references/prompt_library_full.json`](./references/prompt_library_full.json) — Full mode prompt library (8.5MB)
+
+Place them in this structure:
+```
+your-skills-dir/prompt-optimizer/
+├── SKILL.md
+└── references/
+    ├── prompt_library_lite.json
+    └── prompt_library_full.json
+```
+
+> ⚠️ SKILL.md alone won't work — it needs the JSON libraries to match prompts against.
 
 ## File Structure
 
