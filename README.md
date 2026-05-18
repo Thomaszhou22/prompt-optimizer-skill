@@ -134,8 +134,8 @@ User Input (natural language)
   ├── No match found (>30% similarity)? → fallback to CRAFT-only optimization
   Step 3: Apply CRAFT framework
   Step 4: Multi-language adaptation (if user language ≠ template language)
-  Step 5: Show optimized prompt to user
-  Step 6: User confirms / tweaks / cancels
+  Step 5: Show optimized prompt to user (format: text / Markdown / XML / all — user chooses)
+  Step 6: User confirms / tweaks / cancels / changes format
   Step 7: Final prompt ready to use with any AI
   Step 8: "Disable prompt optimization" to turn off when done
 ```
