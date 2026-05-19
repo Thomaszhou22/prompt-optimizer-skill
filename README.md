@@ -167,6 +167,8 @@ You: "✅"
 
 ## ⚙️ All Configuration Commands
 
+> 🌐 All commands accept any language. Just express your intent naturally — the AI will understand.
+
 ### Engine Mode
 
 | Command | Behavior |
