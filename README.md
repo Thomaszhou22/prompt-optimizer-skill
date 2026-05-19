@@ -36,7 +36,7 @@ Different platforms have different capabilities. **Find yours below and follow t
 
 **Install:** Copy skill folder into your project. Add to `CLAUDE.md`: `Read and follow skills/prompt-optimizer/SKILL.md`
 **Recommended Mode:** Template-first (default), in-conversation state memory.
-**Limitation:** Must re-enable ("开启提示词优化") each new conversation.
+**Limitation:** Must re-enable ("enable prompt optimizer") each new conversation.
 
 ---
 
@@ -50,7 +50,7 @@ Different platforms have different capabilities. **Find yours below and follow t
 | State Persistence | ❌ No cross-session persistence |
 | Quality Evaluation | ✅ |
 
-**Install:** Copy skill folder into project root. Add to `.cursorrules`: `Read and follow skills/prompt-optimizer/SKILL.md. Activate when user says "开启提示词优化".`
+**Install:** Copy skill folder into project root. Add to `.cursorrules`: `Read and follow skills/prompt-optimizer/SKILL.md. Activate when user says "enable prompt optimizer".`
 **Recommended Mode:** Template-first (default).
 **Limitation:** Must re-enable each session; manual file copy required.
 
@@ -67,7 +67,7 @@ Different platforms have different capabilities. **Find yours below and follow t
 | Quality Evaluation | ✅ |
 
 **Install:** Same as Cursor — place in project, reference in system instructions.
-**Recommended Mode:** `"引擎设为纯LLM"` or load small categories only (Tech Tools 36KB, Translation 57KB).
+**Recommended Mode:** `"set engine to LLM-only"` or load small categories only (Tech Tools 36KB, Translation 57KB).
 **Limitation:** Free tier context is limited; large JSON may truncate. LLM-only mode recommended.
 
 ---
@@ -116,7 +116,7 @@ Different platforms have different capabilities. **Find yours below and follow t
 | Quality Evaluation | ✅ |
 
 **Install:** Place skill folder in project. Reference with `--file`.
-**Recommended Mode:** `"引擎设为纯LLM"` (saves context space).
+**Recommended Mode:** `"set engine to LLM-only"` (saves context space).
 **Limitation:** Aider is designed for code editing; general chat feels unnatural. System prompt may be too long with SKILL.md added.
 
 ---
@@ -151,14 +151,14 @@ Different platforms have different capabilities. **Find yours below and follow t
 
 | Action | Command |
 |--------|---------|
-| Enable | "开启提示词优化" (or "enable prompt optimizer") |
-| Enable (Full) | "开启完整版提示词优化" |
-| Disable | "关闭提示词优化" |
+| Enable | "enable prompt optimizer" / "开启提示词优化" |
+| Enable (Full) | "enable full version" / "开启完整版提示词优化" |
+| Disable | "disable prompt optimizer" / "关闭提示词优化" |
 
 **Minimal usage:**
 ```
-You: "开启提示词优化"
-You: "优化这个：帮我写个登录页面"
+You: "enable prompt optimizer" (or any language)
+You: "optimize this: help me write a login page"
 Bot: [outputs optimized prompt]
 You: "✅"
 ```
@@ -173,19 +173,19 @@ You: "✅"
 
 | Command | Behavior |
 |---------|----------|
-| "引擎设为模板优先" (default) | Search template library first; if no match, auto-fallback to LLM |
-| "引擎设为纯LLM" | Skip template library; host AI optimizes directly |
-| "引擎设为仅模板" | Template library only; tells user if no match found |
+| "set engine to template-first" (default) | Search template library first; if no match, auto-fallback to LLM |
+| "set engine to LLM-only" | Skip template library; host AI optimizes directly |
+| "set engine to template-only" | Template library only; tells user if no match found |
 
 ### Template Categories
 
 | Command | Behavior |
 |---------|----------|
-| "只加载编程开发的模板" (default) | Loads only ~1.5MB |
-| "加载编程+数据分析" | Load multiple categories |
-| "有哪些类别可选" | Show all 14 categories |
-| "加载全部类别" | Load complete library |
-| "移除艺术娱乐" | Remove a loaded category |
+| "load only coding templates" (default) | Loads only ~1.5MB |
+| "load coding + data-analysis" | Load multiple categories |
+| "what categories are available" | Show all 14 categories |
+| "load all categories" | Load complete library |
+| "remove art-entertainment" | Remove a loaded category |
 
 | Category | Prompts | Size |
 |----------|---------|------|
@@ -208,10 +208,10 @@ You: "✅"
 
 | Command | Effect |
 |---------|--------|
-| "输出格式设为纯文本" (default) | Raw prompt text |
-| "输出格式设为 Markdown" | Headings, lists, bold formatting |
-| "输出格式设为 XML" | `<prompt><role>...</role></prompt>` structure |
-| "输出格式设为全部" | All three formats side by side |
+| "set format to plain text" (default) | Raw prompt text |
+| "set format to Markdown" | Headings, lists, bold formatting |
+| "set format to XML" | `<prompt><role>...</role></prompt>` structure |
+| "set format to all" | All three formats side by side |
 
 ---
 
@@ -222,15 +222,15 @@ You: "✅"
 | "✅" | Confirm and use |
 | "❌" | Discard; use original input |
 | Free-form feedback | Fine-tune (e.g., "add responsive design") |
-| "继续优化" | Iterate another round |
-| "评估" | Show before/after quality scores |
-| "换格式" | Switch output format |
+| "continue optimizing" | Iterate another round |
+| "evaluate" | Show before/after quality scores |
+| "change format" | Switch output format |
 
 ---
 
 ## 📊 Quality Evaluation
 
-Say "评估" to trigger a before/after comparison. Scores 1-10 on 5 dimensions:
+Say "evaluate" (or any equivalent) to trigger a before/after comparison. Scores 1-10 on 5 dimensions:
 
 | Dimension | What It Measures |
 |-----------|-----------------|
@@ -250,7 +250,7 @@ Output: Before vs. After scores + total improvement + highlights + remaining gap
 |------|------|-------------|
 | **General** (default) | Most scenarios | Structured Role/Profile/Skills/Rules/Workflows output |
 | **Analytical** | Complex scenarios | 8-dimension deep analysis, 5 points per dimension |
-| **Iterative** | Say "继续优化" | Merges new requirements into existing prompt |
+| **Iterative** | Say "continue optimizing" | Merges new requirements into existing prompt |
 | **User Query Refinement** | Optimizing user queries | Adds clarity, scope, parameters, output format |
 
 ---
