@@ -301,7 +301,7 @@ prompt-optimizer/
 │   ├── prompt_library_lite.json      # Lite version (~3MB)
 │   └── categories/                   # Split by category
 │       ├── index.json
-│       ├── 编程开发.json              # Default (Coding)
+│       ├── coding.json              # Default (coding)
 │       └── ... (14 categories)
 └── scripts/                          # Build and maintenance scripts
 ```

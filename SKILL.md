@@ -16,7 +16,7 @@ Skill 启动时自动检测当前宿主平台的能力，降级不可用功能�
 |------|----------|-----------|------------|
 | 文件读取 | 尝试读 `references/categories/index.json` | 模板引擎可用 | 强制切换到 `llm-only` 模式，隐藏模板相关指令 |
 | 文件写入 | 尝试写 `memory/prompt_optimizer_state.json` | 状态持久化 | 对话内记忆状态，不写文件 |
-| 大文件处理 | 读取 `categories/编程开发.json`（1.5MB） | 按类别加载 | 只能用小类别或纯 LLM |
+| 大文件处理 | 读取 `categories/coding.json`（1.5MB） | 按类别加载 | 只能用小类别或纯 LLM |
 
 **启动时行为：**
 1. 尝试读取 `references/categories/index.json`
@@ -58,37 +58,37 @@ Skill 启动时自动检测当前宿主平台的能力，降级不可用功能�
 
 | 操作 | 指令示例 |
 |---|---|
-| 加载特定类别 | "只加载编程开发的模板"、"加载编程+数据分析" |
+| 加载特定类别 | "只加载coding的模板"、"加载编程+data-analysis" |
 | 查看可选类别 | "有哪些类别可选" |
 | 加载全部 | "加载全部类别" |
-| 移除类别 | "移除艺术娱乐" |
+| 移除类别 | "移除art-entertainment" |
 
 **类别文件位置：** `references/categories/{类别名}.json`
 
 | 类别 | 数量 | 文件大小 |
 |------|------|----------|
-| 编程开发 | 1672 | ~1.5MB |
-| 艺术娱乐 | 404 | ~411KB |
+| coding | 1672 | ~1.5MB |
+| art-entertainment | 404 | ~411KB |
 | 其他 | 253 | ~202KB |
-| 写作创作 | 208 | ~196KB |
-| 教育学习 | 117 | ~107KB |
-| 顾问咨询 | 114 | ~115KB |
-| 商业职场 | 108 | ~98KB |
-| 生活健康 | 82 | ~76KB |
-| 法律金融 | 82 | ~80KB |
-| 数据分析 | 73 | ~73KB |
-| 创意生成 | 73 | ~66KB |
-| 科学研究 | 61 | ~55KB |
-| 语言翻译 | 60 | ~57KB |
-| 技术工具 | 37 | ~36KB |
+| writing | 208 | ~196KB |
+| education | 117 | ~107KB |
+| consulting | 114 | ~115KB |
+| business | 108 | ~98KB |
+| health-lifestyle | 82 | ~76KB |
+| legal-finance | 82 | ~80KB |
+| data-analysis | 73 | ~73KB |
+| creative-generation | 73 | ~66KB |
+| science-research | 61 | ~55KB |
+| translation | 60 | ~57KB |
+| tech-tools | 37 | ~36KB |
 
 **加载优先级：** 指定类别 → 加载对应 `categories/` 文件；未指定类别 → 加载完整 lite/full 文件。
 
-默认引擎 `template-first`，默认类别 `编程开发`（占模板库 50%，最常用）。用户可随时切换。
+默认引擎 `template-first`，default category `coding`（占模板库 50%，最常用）。用户可随时切换。
 
 状态持久化到 `memory/prompt_optimizer_state.json`：
 ```json
-{"enabled": true, "mode": "lite", "engine": "template-first", "output_format": "text", "categories": ["编程开发"], "turned_on_at": "2026-05-19T16:05:00+08:00"}
+{"enabled": true, "mode": "lite", "engine": "template-first", "output_format": "text", "categories": ["coding"], "turned_on_at": "2026-05-19T16:05:00+08:00"}
 ```
 
 engine 可选值：`"template-first"`（默认） | `"llm-only"` | `"template-only"`
@@ -142,7 +142,7 @@ engine 可选值：`"template-first"`（默认） | `"llm-only"` | `"template-on
 - 关键词重叠
 - 领域分类匹配
 
-分类：编程开发 | 写作创作 | 教育学习 | 商业职场 | 生活健康 | 技术工具 | 语言翻译 | 艺术娱乐 | 顾问咨询 | 创意生成 | 数据分析 | 科学研究 | 法律金融 | 其他
+分类：coding | writing | education | business | health-lifestyle | tech-tools | translation | art-entertainment | consulting | creative-generation | data-analysis | science-research | legal-finance | 其他
 
 **匹配失败处理（template-first 模式）：** 自动告知用户「模板库未匹配到，正在用 LLM 直接优化」，然后跳到 Step 3。
 
