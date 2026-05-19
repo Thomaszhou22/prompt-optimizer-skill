@@ -1,307 +1,320 @@
-<div align="center">
+# Prompt Optimizer
 
-# 🚀 Prompt Optimizer
-
-### AI Prompt Auto-Optimization Skill for OpenClaw
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Templates: 3300+](https://img.shields.io/badge/Templates-3%2C344-green.svg)]()
-[![Sources: 18](https://img.shields.io/badge/Sources-18%20Repos-orange.svg)]()
-[![Languages: Multi](https://img.shields.io/badge/Languages-Multi-blue.svg)]()
-
-Transform vague natural language into **precise, professional-grade prompts** using a curated library of 3,300+ proven templates from 18 major GitHub repositories.
-
-**No prompt engineering knowledge required. Just speak naturally.**
-
-[Installation](#-installation) · [How It Works](#-how-it-works) · [Example](#-example) · [Data Sources](#-data-sources--impact) · [Contributing](#-contributing)
-
-</div>
+> **双引擎提示词优化 Skill** — 模板库匹配（3344 条）+ LLM 元提示（宿主 AI 直接优化），零 API 成本。
 
 ---
 
-## ✨ Features
+## 🖥️ 平台适配（先看这个！）
 
-- 🧠 **3,300+ Templates** — Largest open-source prompt library in a single skill (no other skill combines this many templates with auto-matching)
-- ⚡ **Two Modes** — Lite (3.0MB, fast) / Full (9.9MB, complete)
-- 🔄 **Smart Toggle** — Only activates when you want it; auto-suggests mode switching
-- ✅ **Confirm Before Execute** — Never applies without your approval
-- 🏗️ **CRAFT Framework** — Every prompt structured with Context, Role, Action, Format, Target Audience
-- 🌍 **Multi-language** — Auto-translates English templates to any language
-- 🤖 **Model-Agnostic** — Works with ChatGPT, Claude, GLM, Gemini, Llama, or any AI
+不同平台能力不同，**请找到你用的平台，按推荐方式使用。**
 
-> 💡 **English recommended.** The template library is 99% English. English input gets the best template matching quality. Other languages work but go through an extra translation step — see [Language Support](#-language-support).
+### ⭐⭐⭐⭐⭐ OpenClaw（最佳体验）
 
-## 📦 Categories
+| 能力 | 状态 |
+|------|------|
+| 模板引擎 | ✅ 完整支持 |
+| LLM 引擎 | ✅ |
+| 按类别加载 | ✅ |
+| 持久化 | ✅ 自动保存配置 |
+| 评估打分 | ✅ |
 
-| Category | Count | Category | Count |
-|----------|-------|----------|-------|
-| 💻 Coding | 1,672 | 🎨 Art & Entertainment | 404 |
-| ✍️ Writing | 208 | 💼 Business | 108 |
-| 🎓 Education | 117 | 💡 Creative | 73 |
-| 📊 Data Analysis | 73 | 🏥 Health | 82 |
-| 🗣️ Translation | 60 | ⚖️ Legal & Finance | 82 |
-| 🔧 Dev Tools | 37 | 🔬 Science | 61 |
-| 🎯 Consulting | 114 | 📁 Other | 253 |
-
-## ⚡ Installation
-
-### 👉 OpenClaw Users
-
-```bash
-git clone https://github.com/Thomaszhou22/prompt-optimizer-skill.git
-cp -r prompt-optimizer-skill/ ~/.config/openclaw/skills/prompt-optimizer/
-```
-
-Say **"Enable lite/full prompt optimization"** to activate. Done.
-
-<details>
-<summary>📂 Manual download (3 files required)</summary>
-
-1. [`SKILL.md`](./SKILL.md) — Core skill instructions
-2. [`references/prompt_library_lite.json`](./references/prompt_library_lite.json) — Lite mode (3.0MB)
-3. [`references/prompt_library_full.json`](./references/prompt_library_full.json) — Full mode (9.9MB)
-
-Place them like this:
-```
-your-skills-dir/prompt-optimizer/
-├── SKILL.md
-└── references/
-    ├── prompt_library_lite.json
-    └── prompt_library_full.json
-```
-</details>
+**安装：** 放到 `skills/prompt-optimizer/` 目录即可，OpenClaw 自动识别。
+**推荐模式：** 模板优先 + LLM 兜底（默认），所有功能可用。
+**无任何限制。**
 
 ---
 
-### 👉 Other AI Tool Users
+### ⭐⭐⭐⭐ Claude Code
 
-Works with **Claude Code · Cursor · Windsurf · Gemini CLI · Aider · Cline · Copilot**
+| 能力 | 状态 |
+|------|------|
+| 模板引擎 | ✅ 支持读文件 |
+| LLM 引擎 | ✅ |
+| 按类别加载 | ✅ |
+| 持久化 | ⚠️ 仅对话内有效，重启丢失 |
+| 评估打分 | ✅ |
 
-```bash
-git clone https://github.com/Thomaszhou22/prompt-optimizer-skill.git
+**安装：** 把 skill 文件夹放到项目目录下，在 `CLAUDE.md` 中加入 `读取 skills/prompt-optimizer/SKILL.md 并遵循`。
+**推荐模式：** 模板优先（默认），对话内状态记忆。
+**缺陷：** 每次新对话需重新"开启提示词优化"。
+
+---
+
+### ⭐⭐⭐½ Cursor
+
+| 能力 | 状态 |
+|------|------|
+| 模板引擎 | ✅ 支持读文件 |
+| LLM 引擎 | ✅ |
+| 按类别加载 | ✅ |
+| 持久化 | ❌ 无跨会话持久化 |
+| 评估打分 | ✅ |
+
+**安装：** 把 skill 文件夹复制到项目根目录，在 `.cursorrules` 中加入 `读取 skills/prompt-optimizer/SKILL.md 并遵循其指令。当用户说"开启提示词优化"时激活。`。
+**推荐模式：** 模板优先（默认）。
+**缺陷：** 每次新对话需重新开启；需手动复制文件到项目目录。
+
+---
+
+### ⭐⭐⭐ Gemini CLI
+
+| 能力 | 状态 |
+|------|------|
+| 模板引擎 | ⚠️ 大文件（>1MB）可能截断 |
+| LLM 引擎 | ✅ |
+| 按类别加载 | ⚠️ 建议只用小类别 |
+| 持久化 | ❌ 无 |
+| 评估打分 | ✅ |
+
+**安装：** 同 Cursor，放到项目目录并在系统指令中引用。
+**推荐模式：** `引擎设为纯LLM` 或只加载小类别（技术工具 36KB、语言翻译 57KB）。
+**缺陷：** 免费版上下文有限，大类别 JSON 可能截断；建议直接用纯 LLM 模式。
+
+---
+
+### ⭐⭐⭐½ Cline / 龙虾
+
+| 能力 | 状态 |
+|------|------|
+| 模板引擎 | ✅ 支持读文件 |
+| LLM 引擎 | ✅ |
+| 按类别加载 | ✅ |
+| 持久化 | ❌ 无跨会话持久化 |
+| 评估打分 | ✅ |
+
+**安装：** 把 skill 文件夹复制到项目目录，在 Cline 的自定义指令中引用 SKILL.md。
+**推荐模式：** 模板优先（默认）。
+**缺陷：** 每次新对话需重新开启；需手动复制文件到项目目录。
+
+---
+
+### ⭐⭐ ChatGPT Custom GPT
+
+| 能力 | 状态 |
+|------|------|
+| 模板引擎 | ❌ 无法读取 JSON |
+| LLM 引擎 | ✅ |
+| 按类别加载 | ❌ |
+| 持久化 | ❌ |
+| 评估打分 | ⚠️ 无原始对比数据 |
+
+**安装：** 将 `STANDALONE-GPT.md` 的内容粘贴到 Custom GPT 的 Instructions 中。
+**推荐模式：** 纯 LLM（唯一可用模式）。
+**缺陷：** 只能用 LLM 直接优化，模板库、类别加载、持久化全部不可用。
+**⚠️ 请使用 `STANDALONE-GPT.md`，不要用 `SKILL.md`。**
+
+---
+
+### ⭐⭐½ Aider
+
+| 能力 | 状态 |
+|------|------|
+| 模板引擎 | ⚠️ 可读文件但上下文紧张 |
+| LLM 引擎 | ✅ |
+| 按类别加载 | ⚠️ 建议小类别 |
+| 持久化 | ❌ |
+| 评估打分 | ✅ |
+
+**安装：** 把 skill 文件夹放到项目目录，用 `--file` 参数引用。
+**推荐模式：** `引擎设为纯LLM`（最省上下文）。
+**缺陷：** Aider 是代码编辑工具，通用对话体验不自然；system prompt 已较长，加 SKILL.md 可能超限。
+
+---
+
+## 📦 安装文件选择
+
+| 平台 | 用哪个文件 | 怎么装 |
+|------|-----------|--------|
+| OpenClaw | `SKILL.md` + 整个 `references/` | 放到 `skills/prompt-optimizer/` |
+| Claude Code | `SKILL.md` + 整个 `references/` | 放到项目目录，`CLAUDE.md` 引用 |
+| Cursor | `SKILL.md` + 整个 `references/` | 放到项目目录，`.cursorrules` 引用 |
+| Gemini CLI | `SKILL.md` + 小类别 JSON | 放到项目目录，系统指令引用 |
+| Cline/龙虾 | `SKILL.md` + 整个 `references/` | 放到项目目录，自定义指令引用 |
+| ChatGPT GPT | `STANDALONE-GPT.md` | 粘贴到 Instructions |
+| Aider | `SKILL.md` | 放到项目目录 |
+
+---
+
+## 🎯 默认配置
+
+| 设置项 | 默认值 | 可选值 |
+|--------|--------|--------|
+| 引擎 | **模板优先 + LLM 兜底** | 模板优先 / 纯LLM / 仅模板 |
+| 模板库版本 | **简易版**（~3MB） | 简易版 / 完整版（~10MB） |
+| 加载类别 | **编程开发**（1672 条，~1.5MB） | 14 个类别任意组合 |
+| 输出格式 | **纯文本** | 纯文本 / Markdown / XML / 全部 |
+| 状态 | **默认关闭**，需手动开启 | — |
+
+---
+
+## 🚀 快速开始
+
+| 操作 | 指令 |
+|------|------|
+| 开启 | "开启提示词优化" |
+| 开启（完整版） | "开启完整版提示词优化" |
+| 关闭 | "关闭提示词优化" |
+
+**最简用法：**
+```
+你："开启提示词优化"
+你："优化这个：帮我写个登录页面"
+助手：输出优化后的 prompt
+你："✅"
 ```
 
-Then pick your tool:
+---
 
-| Tool | Command |
+## ⚙️ 所有配置指令
+
+### 引擎模式
+
+| 指令 | 行为 |
+|------|------|
+| "引擎设为模板优先"（默认） | 先查模板库，匹配不到自动让 LLM 生成 |
+| "引擎设为纯LLM" | 跳过模板库，宿主 AI 直接优化 |
+| "引擎设为仅模板" | 只查模板库，匹配不到就告诉你 |
+
+### 模板类别
+
+| 指令 | 行为 |
+|------|------|
+| "只加载编程开发的模板"（默认） | 只读 1.5MB |
+| "加载编程+数据分析" | 组合加载 |
+| "有哪些类别可选" | 查看全部 14 个类别 |
+| "加载全部类别" | 加载完整库 |
+| "移除艺术娱乐" | 移除已加载的类别 |
+
+| 类别 | 数量 | 大小 |
+|------|------|------|
+| **编程开发**（默认） | 1,672 | ~1.5MB |
+| 艺术娱乐 | 404 | ~411KB |
+| 其他 | 253 | ~202KB |
+| 写作创作 | 208 | ~196KB |
+| 教育学习 | 117 | ~107KB |
+| 顾问咨询 | 114 | ~115KB |
+| 商业职场 | 108 | ~98KB |
+| 生活健康 | 82 | ~76KB |
+| 法律金融 | 82 | ~80KB |
+| 数据分析 | 73 | ~73KB |
+| 创意生成 | 73 | ~66KB |
+| 科学研究 | 61 | ~55KB |
+| 语言翻译 | 60 | ~57KB |
+| 技术工具 | 37 | ~36KB |
+
+### 输出格式
+
+| 指令 | 效果 |
+|------|------|
+| "输出格式设为纯文本"（默认） | 直接输出 prompt |
+| "输出格式设为 Markdown" | 标题/列表/加粗格式包裹 |
+| "输出格式设为 XML" | `<prompt><role>...</role></prompt>` 结构 |
+| "输出格式设为全部" | 三种格式同时输出 |
+
+---
+
+## 📋 优化后可选操作
+
+| 回复 | 作用 |
+|------|------|
+| "✅" | 确认使用 |
+| "❌" | 放弃，用原始输入 |
+| 直接提修改意见 | 微调（如"加个响应式设计"） |
+| "继续优化" | 再迭代一轮 |
+| "评估" | 对优化前后打分对比 |
+| "换格式" | 切换输出格式 |
+
+---
+
+## 📊 质量评估
+
+说"评估"触发，5 维度打分（各 1-10 分）：
+
+| 维度 | 评估什么 |
 |------|----------|
-| **Claude Code** | `cat STANDALONE.md >> /your-project/CLAUDE.md` |
-| **Cursor** | `cat STANDALONE.md >> /your-project/.cursorrules` |
-| **Windsurf** | `cat STANDALONE.md >> /your-project/.windsurfrules` |
-| **Gemini CLI** | `cat STANDALONE.md >> /your-project/GEMINI.md` |
-| **Aider** | `cat STANDALONE.md >> /your-project/.aider.conventions.md` |
-| **Cline** | `cat STANDALONE.md >> /your-project/.clinerules` |
-| **Copilot** | `cat STANDALONE.md >> /your-project/.github/copilot-instructions.md` |
+| goalClarity | 目标清晰度 |
+| instructionCompleteness | 指令完整性 |
+| structuralExecutability | 结构可执行性 |
+| ambiguityControl | 歧义控制 |
+| robustness | 鲁棒性 |
 
-That's it. `STANDALONE.md` includes:
-- Complete CRAFT optimization framework
-- Auto-loads lite/full template libraries based on task complexity
-- 42 essential templates built-in, 3,300+ available
-
-> **Note:** Copilot cannot auto-read local JSON files — it will use the CRAFT framework without template matching. All other tools auto-load templates.
+输出：原始 vs 优化后评分 + 总分提升 + 改进亮点 + 可优化方向。
 
 ---
 
-### 3. Use
-Just talk naturally:
-```
-You: Help me write a market research report
-→ Skill outputs an optimized, structured prompt
-→ You confirm / tweak / cancel
-→ Use the optimized prompt with any AI
-```
+## 🧠 四种优化模式
 
-## 🔄 How It Works
+| 模式 | 触发条件 | 说明 |
+|------|----------|------|
+| **通用优化**（默认） | 大多数场景 | Role/Profile/Skills/Rules/Workflows 结构化 |
+| **分析式优化** | 复杂场景 | 8 维度深度分析，每维度 5 要点 |
+| **迭代优化** | 说"继续优化" | 在已有 prompt 上融入新需求 |
+| **用户 Prompt 精炼** | 优化用户查询 | 补齐目标/范围/参数/输出格式 |
 
-```
-User Input (natural language)
-        ↓
-  Step 0: Activate (optional, disabled by default to save tokens)
-  ├── "Enable prompt optimization" → Turn on with Lite mode
-  ├── "Enable full prompt optimization" → Turn on with Full mode
-  ├── "Disable prompt optimization" → Turn off
-  └── Already on → proceed
-        ↓
-  Step 0b: Complexity Check
-  ├── Lite mode + complex task → suggest switching to Full
-  ├── Full mode + simple task → suggest switching to Lite
-  └── Mode matches → proceed
-        ↓
-  Step 1: Understand user intent
-  Step 2: Search & rank templates by quality (0-10 score)
-  ├── Score: structure, specificity, expertise, constraints, usability
-  └── Dedup: keep highest-scoring template per group
-  ├── No match found (>30% similarity)? → fallback to CRAFT-only optimization
-  Step 3: Apply CRAFT framework
-  Step 4: Multi-language adaptation (if user language ≠ template language)
-  Step 5: Show optimized prompt to user (format: text / Markdown / XML / all — user chooses)
-  Step 6: User confirms / tweaks / cancels / changes format
-  Step 7: Final prompt ready to use with any AI
-  Step 8: "Disable prompt optimization" to turn off when done
-```
+---
 
-## 🌍 Language Support
-
-The template library is **99% English** (3,332 English + 12 Chinese). Here's how different languages perform:
-
-| Input Language | Template Matching | Output Quality | Notes |
-|---------------|-------------------|----------------|-------|
-| 🇺🇸 **English** | ⭐⭐⭐⭐⭐ Best | ⭐⭐⭐⭐⭐ | Direct match, no translation needed |
-| 🇨🇳 Chinese | ⭐⭐⭐⭐ Good | ⭐⭐⭐⭐ | Translated from English templates |
-| 🇯🇵 Japanese | ⭐⭐⭐ Good | ⭐⭐⭐⭐ | Translated + localized |
-| 🇪🇸 Spanish | ⭐⭐⭐ Good | ⭐⭐⭐⭐ | Translated + localized |
-| 🇰🇷 Korean | ⭐⭐⭐ Good | ⭐⭐⭐⭐ | Translated + localized |
-| Other languages | ⭐⭐⭐ Good | ⭐⭐⭐ | Works, but quality depends on AI's translation ability |
-
-**How it works for non-English users:**
-1. User writes in their language (e.g. Chinese: "帮我写个登录页")
-2. AI understands the intent and searches English templates
-3. Best template is matched by quality score
-4. Optimized prompt is translated + localized to the user's language
-5. User sees the result in their own language
-
-**Why English is recommended:**
-- Template keywords match directly ("React developer" → exact match)
-- No translation step = faster + more accurate
-- Domain terminology stays precise (no translation ambiguity)
-- The CRAFT structure is preserved perfectly
-
-Non-English works fine for most cases, but if you want the absolute best results, write your request in English.
-
-## 📝 Example
-
-**Input:** `I want to learn Python`
-
-**Output:**
-```
-You are a senior Python programming instructor with over 15 years of
-teaching experience and a full-stack development background.
-
-[Context] The user is a programming beginner wanting to systematically
-learn Python from scratch.
-
-[Role] You excel at explaining complex concepts with simple analogies,
-emphasizing hands-on practice over pure theory.
-
-[Action]
-1. Assess the learner's current level and learning goals
-2. Build a personalized roadmap: basics → data structures → functions
-   & modules → real projects
-3. For each concept, explain with a real-life analogy first, then show
-   a code example
-4. End each lesson with a small exercise (with reference answer)
-5. When errors occur, guide the learner to discover bugs themselves
-
-[Format] Code in ```python blocks, key points **bold**, recommended
-time and milestones for each stage.
-
-[Target Audience] Complete programming beginners.
-```
-
-## 📊 Data Sources & Impact
-
-Each repository contributes different strengths. Together they achieve ~90% intent coverage:
-
-| Repository | Prompts | Type | Unique Value |
-|---|---|---|---|
-| [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) | 1,794 | Role-based (short) | **Breadth** — covers every common role |
-| [ai-boost/awesome-prompts](https://github.com/ai-boost/awesome-prompts) | 221 | Detailed multi-paragraph | **Depth** — full specifications, not one-liners |
-| [0xeb/TheBigPromptLibrary](https://github.com/0xeb/TheBigPromptLibrary) | 115 | Production system prompts | **Real patterns** — how ChatGPT/v0/Manus actually prompt |
-| [abilzerian/LLM-Prompt-Library](https://github.com/abilzerian/LLM-Prompt-Library) | 47 | Domain-specific | **Expertise** — finance, legal, medical terminology |
-| [Vipuser2023/chatgpt-prompts-chinese](https://github.com/Vipuser2023/chatgpt-prompts-chinese) | 12 | Chinese-native | **Native Chinese** — not translated, natively written |
-| [jamesponddotco/llm-prompts](https://github.com/jamesponddotco/llm-prompts) | 32 | Structured, concise | **Formatting** — clean prompt patterns |
-| [0x2e-Tech/awesome-ai-prompts](https://github.com/0x2e-Tech/awesome-ai-prompts) | 125 | Categorized 500+ | **General** — broad topic coverage |
-| [chevp/prompt-guide](https://github.com/chevp/prompt-guide) | 385 | Game dev focused | **Game Dev** — coding, graphics, AI, physics, design |
-| [ahmadsheikhi89/devops-ai-prompts](https://github.com/ahmadsheikhi89/devops-ai-prompts) | 12 | DevOps production-tested | **DevOps** — infrastructure documentation |
-| [collabnix/chatgpt-prompts-devops](https://github.com/collabnix/chatgpt-prompts-devops) | 12 | Docker/K8s terminal | **DevOps** — Docker, Kubernetes, CI/CD |
-| [tayyabakmal1/qa-prompt-library](https://github.com/tayyabakmal1/qa-prompt-library) | 719 | QA comprehensive | **Testing** — manual, automation, API, UI testing |
-| [dashatsion/qa-advanced-prompting](https://github.com/dashatsion/qa-advanced-prompting) | 15 | QA automation | **Testing** — Cypress, Playwright, test design |
-
-### Cumulative Quality Improvement
-
-| Stage | Templates | Estimated Coverage |
-|---|---|---|
-| awesome-chatgpt-prompts only | ~200 roles | **50%** (baseline) |
-| + ai-boost detailed prompts | 420+ | **70%** (+20pp) |
-| + TheBigPromptLibrary | 535+ | **78%** (+8pp) |
-| + abilzerian domain-specific | 580+ | **85%** (+7pp) |
-| + Chinese + llm-prompts | 2,221 | **90%** (+5pp) |
-| **3,260** | **95%+** (+5pp) |
-| + cleanup + niche supplements | **3,344** | **95%+** (quality improved) |
-
-## 🔄 Version Comparison
-
-| | 🪶 Lite | 📚 Full |
-|---|---|---|
-| File Size | 3.0 MB | 9.9 MB |
-| Prompt Length | 800 chars (truncated) | Complete, untruncated |
-| Token Cost | Lower | Higher |
-| Best For | Daily quick optimization | Project-level work |
-
-## 📁 File Structure
+## 🔧 完整工作流
 
 ```
-prompt-optimizer-skill/
-├── SKILL.md                              # OpenClaw skill instructions
-├── STANDALONE.md                         # Non-OpenClaw instructions (Claude Code, Cursor, etc.)
-├── README.md                             # This file
-├── LICENSE                               # MIT
+1. 开启 → 检测平台能力 → 加载默认配置
+   ├─ 文件系统可用 → 模板引擎就绪
+   └─ 文件系统不可用 → 自动切换纯 LLM 模式
+2. 用户输入提示词
+3. 解析意图（目标、领域、角色、约束、复杂度）
+4. 引擎路由：
+   ├─ 模板优先：查库 → 成功 → CRAFT 输出 / 失败 → LLM 兜底
+   ├─ 纯LLM：meta-prompt 直接生成
+   └─ 仅模板：查库 → 成功 → 输出 / 失败 → 告知用户
+5. 质量增强（精确指令 + 边界约束 + 示例）
+6. 确认交付
+7. 可选：评估 / 迭代 / 微调
+```
+
+---
+
+## 🗂️ 模板库数据
+
+来自 7 个主流仓库，共 **3,344 条**：
+
+| 来源 | 说明 |
+|------|------|
+| f/awesome-chatgpt-prompts | CSV，5MB |
+| awesome-chatgpt-prompts（原版） | CSV |
+| ai-boost/awesome-prompts | 228 个高质量详细提示词 |
+| 0xeb/TheBigPromptLibrary | 115 个系统提示词 |
+| jamesponddotko/llm-prompts | 分类库 |
+| chatgpt-prompts-chinese | 中文提示词 |
+| Prompt Garden | 社区贡献 |
+
+---
+
+## 📂 文件结构
+
+```
+prompt-optimizer/
+├── SKILL.md                  # 核心指令（v4.0，完整功能）
+├── STANDALONE-GPT.md         # ChatGPT Custom GPT 精简版
+├── STANDALONE.md             # 独立使用说明
+├── README.md                 # 本文件
 ├── references/
-│   ├── prompt_library_lite.json          # 3,344 templates, truncated (3.0 MB)
-│   └── prompt_library_full.json          # 3,344 templates, complete (9.9 MB)
-└── scripts/                              # (reserved for future tools)
+│   ├── prompt_library_full.json      # 完整版（~10MB）
+│   ├── prompt_library_lite.json      # 简易版（~3MB）
+│   └── categories/                   # 按类别拆分
+│       ├── index.json
+│       ├── 编程开发.json              # 默认加载
+│       └── ...（14 个类别）
+└── scripts/
 ```
-
-## 🤝 Contributing
-
-We welcome prompt contributions!
-
-### Submit a new prompt
-
-**Option 1: Open an Issue (easiest)**
-1. Go to [Issues](https://github.com/Thomaszhou22/prompt-optimizer-skill/issues/new)
-2. Title: `Prompt: [role name]`
-3. Paste in this format:
-```
-Act: [Role name, e.g. "Senior React Developer"]
-Prompt: [The full prompt text]
-Category: [Coding / Writing / Education / Business / Health / etc.]
-Language: [en / zh]
-```
-
-**Option 2: Submit a Pull Request**
-1. Fork this repo
-2. Add your prompt to **both** JSON files:
-   - `references/prompt_library_lite.json`
-   - `references/prompt_library_full.json`
-3. Follow the existing structure:
-```json
-{
-  "id": "unique10ch",
-  "act": "Role Name",
-  "act_zh": "角色中文名",
-  "prompt": "Full prompt text...",
-  "category": "Coding",
-  "source": "community/your-github-username",
-  "lang": "en"
-}
-```
-4. Submit PR
-
-### Edit an existing prompt
-
-Open an Issue describing the change, or submit a PR directly.
-
-## 📄 License
-
-MIT — see [LICENSE](LICENSE).
-
-Data source licenses are respected individually: CC0, MIT, Apache 2.0.
 
 ---
 
-<div align="center">
+## 🛡️ 特性
 
-Built by [Thomas Zhou](https://github.com/Thomaszhou22) with AI assistance via [OpenClaw](https://openclaw.ai) 🦞
-
-</div>
+- **零 API 成本** — 宿主 AI 直接优化，不需要额外付费
+- **自动平台检测** — 文件系统不可用时自动降级
+- **双引擎** — 模板库 + LLM 元提示
+- **按类别加载** — 省 token
+- **Model-agnostic** — 所有宿主 AI 通用
+- **双语** — 中文→中文 prompt，英文→英文
+- **质量评估** — 5 维度打分
+- **迭代优化** — 多轮微调
