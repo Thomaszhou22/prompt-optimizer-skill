@@ -1,320 +1,320 @@
 # Prompt Optimizer
 
-> **双引擎提示词优化 Skill** — 模板库匹配（3344 条）+ LLM 元提示（宿主 AI 直接优化），零 API 成本。
+> **Dual-Engine Prompt Optimization Skill** — Template matching (3,344 library) + LLM meta-prompting (host AI as optimizer). Zero API cost.
 
 ---
 
-## 🖥️ 平台适配（先看这个！）
+## 🖥️ Platform Compatibility (Read This First!)
 
-不同平台能力不同，**请找到你用的平台，按推荐方式使用。**
+Different platforms have different capabilities. **Find yours below and follow the recommended setup.**
 
-### ⭐⭐⭐⭐⭐ OpenClaw（最佳体验）
+### ⭐⭐⭐⭐⭐ OpenClaw (Best Experience)
 
-| 能力 | 状态 |
-|------|------|
-| 模板引擎 | ✅ 完整支持 |
-| LLM 引擎 | ✅ |
-| 按类别加载 | ✅ |
-| 持久化 | ✅ 自动保存配置 |
-| 评估打分 | ✅ |
+| Feature | Status |
+|---------|--------|
+| Template Engine | ✅ Full support |
+| LLM Engine | ✅ |
+| Category Loading | ✅ |
+| State Persistence | ✅ Auto-save config |
+| Quality Evaluation | ✅ |
 
-**安装：** 放到 `skills/prompt-optimizer/` 目录即可，OpenClaw 自动识别。
-**推荐模式：** 模板优先 + LLM 兜底（默认），所有功能可用。
-**无任何限制。**
+**Install:** Place in `skills/prompt-optimizer/` directory. OpenClaw auto-detects.
+**Recommended Mode:** Template-first + LLM fallback (default). All features available.
+**No limitations.**
 
 ---
 
 ### ⭐⭐⭐⭐ Claude Code
 
-| 能力 | 状态 |
-|------|------|
-| 模板引擎 | ✅ 支持读文件 |
-| LLM 引擎 | ✅ |
-| 按类别加载 | ✅ |
-| 持久化 | ⚠️ 仅对话内有效，重启丢失 |
-| 评估打分 | ✅ |
+| Feature | Status |
+|---------|--------|
+| Template Engine | ✅ Reads local files |
+| LLM Engine | ✅ |
+| Category Loading | ✅ |
+| State Persistence | ⚠️ In-conversation only; lost on restart |
+| Quality Evaluation | ✅ |
 
-**安装：** 把 skill 文件夹放到项目目录下，在 `CLAUDE.md` 中加入 `读取 skills/prompt-optimizer/SKILL.md 并遵循`。
-**推荐模式：** 模板优先（默认），对话内状态记忆。
-**缺陷：** 每次新对话需重新"开启提示词优化"。
+**Install:** Copy skill folder into your project. Add to `CLAUDE.md`: `Read and follow skills/prompt-optimizer/SKILL.md`
+**Recommended Mode:** Template-first (default), in-conversation state memory.
+**Limitation:** Must re-enable ("开启提示词优化") each new conversation.
 
 ---
 
 ### ⭐⭐⭐½ Cursor
 
-| 能力 | 状态 |
-|------|------|
-| 模板引擎 | ✅ 支持读文件 |
-| LLM 引擎 | ✅ |
-| 按类别加载 | ✅ |
-| 持久化 | ❌ 无跨会话持久化 |
-| 评估打分 | ✅ |
+| Feature | Status |
+|---------|--------|
+| Template Engine | ✅ Reads local files |
+| LLM Engine | ✅ |
+| Category Loading | ✅ |
+| State Persistence | ❌ No cross-session persistence |
+| Quality Evaluation | ✅ |
 
-**安装：** 把 skill 文件夹复制到项目根目录，在 `.cursorrules` 中加入 `读取 skills/prompt-optimizer/SKILL.md 并遵循其指令。当用户说"开启提示词优化"时激活。`。
-**推荐模式：** 模板优先（默认）。
-**缺陷：** 每次新对话需重新开启；需手动复制文件到项目目录。
+**Install:** Copy skill folder into project root. Add to `.cursorrules`: `Read and follow skills/prompt-optimizer/SKILL.md. Activate when user says "开启提示词优化".`
+**Recommended Mode:** Template-first (default).
+**Limitation:** Must re-enable each session; manual file copy required.
 
 ---
 
 ### ⭐⭐⭐ Gemini CLI
 
-| 能力 | 状态 |
-|------|------|
-| 模板引擎 | ⚠️ 大文件（>1MB）可能截断 |
-| LLM 引擎 | ✅ |
-| 按类别加载 | ⚠️ 建议只用小类别 |
-| 持久化 | ❌ 无 |
-| 评估打分 | ✅ |
+| Feature | Status |
+|---------|--------|
+| Template Engine | ⚠️ Large files (>1MB) may truncate |
+| LLM Engine | ✅ |
+| Category Loading | ⚠️ Small categories recommended |
+| State Persistence | ❌ None |
+| Quality Evaluation | ✅ |
 
-**安装：** 同 Cursor，放到项目目录并在系统指令中引用。
-**推荐模式：** `引擎设为纯LLM` 或只加载小类别（技术工具 36KB、语言翻译 57KB）。
-**缺陷：** 免费版上下文有限，大类别 JSON 可能截断；建议直接用纯 LLM 模式。
+**Install:** Same as Cursor — place in project, reference in system instructions.
+**Recommended Mode:** `"引擎设为纯LLM"` or load small categories only (Tech Tools 36KB, Translation 57KB).
+**Limitation:** Free tier context is limited; large JSON may truncate. LLM-only mode recommended.
 
 ---
 
-### ⭐⭐⭐½ Cline / 龙虾
+### ⭐⭐⭐½ Cline / AI Coding Assistants
 
-| 能力 | 状态 |
-|------|------|
-| 模板引擎 | ✅ 支持读文件 |
-| LLM 引擎 | ✅ |
-| 按类别加载 | ✅ |
-| 持久化 | ❌ 无跨会话持久化 |
-| 评估打分 | ✅ |
+| Feature | Status |
+|---------|--------|
+| Template Engine | ✅ Reads local files |
+| LLM Engine | ✅ |
+| Category Loading | ✅ |
+| State Persistence | ❌ No cross-session persistence |
+| Quality Evaluation | ✅ |
 
-**安装：** 把 skill 文件夹复制到项目目录，在 Cline 的自定义指令中引用 SKILL.md。
-**推荐模式：** 模板优先（默认）。
-**缺陷：** 每次新对话需重新开启；需手动复制文件到项目目录。
+**Install:** Copy skill folder into project. Reference SKILL.md in Cline's custom instructions.
+**Recommended Mode:** Template-first (default).
+**Limitation:** Must re-enable each session; manual file copy required.
 
 ---
 
 ### ⭐⭐ ChatGPT Custom GPT
 
-| 能力 | 状态 |
-|------|------|
-| 模板引擎 | ❌ 无法读取 JSON |
-| LLM 引擎 | ✅ |
-| 按类别加载 | ❌ |
-| 持久化 | ❌ |
-| 评估打分 | ⚠️ 无原始对比数据 |
+| Feature | Status |
+|---------|--------|
+| Template Engine | ❌ Cannot read JSON files |
+| LLM Engine | ✅ |
+| Category Loading | ❌ |
+| State Persistence | ❌ |
+| Quality Evaluation | ⚠️ No baseline comparison data |
 
-**安装：** 将 `STANDALONE-GPT.md` 的内容粘贴到 Custom GPT 的 Instructions 中。
-**推荐模式：** 纯 LLM（唯一可用模式）。
-**缺陷：** 只能用 LLM 直接优化，模板库、类别加载、持久化全部不可用。
-**⚠️ 请使用 `STANDALONE-GPT.md`，不要用 `SKILL.md`。**
+**Install:** Paste the contents of `STANDALONE-GPT.md` into your Custom GPT's Instructions.
+**Recommended Mode:** LLM-only (the only available mode).
+**Limitation:** No template library, no category loading, no persistence. LLM optimization only.
+**⚠️ Use `STANDALONE-GPT.md`, NOT `SKILL.md`.**
 
 ---
 
 ### ⭐⭐½ Aider
 
-| 能力 | 状态 |
-|------|------|
-| 模板引擎 | ⚠️ 可读文件但上下文紧张 |
-| LLM 引擎 | ✅ |
-| 按类别加载 | ⚠️ 建议小类别 |
-| 持久化 | ❌ |
-| 评估打分 | ✅ |
+| Feature | Status |
+|---------|--------|
+| Template Engine | ⚠️ Can read files but context is tight |
+| LLM Engine | ✅ |
+| Category Loading | ⚠️ Small categories only |
+| State Persistence | ❌ |
+| Quality Evaluation | ✅ |
 
-**安装：** 把 skill 文件夹放到项目目录，用 `--file` 参数引用。
-**推荐模式：** `引擎设为纯LLM`（最省上下文）。
-**缺陷：** Aider 是代码编辑工具，通用对话体验不自然；system prompt 已较长，加 SKILL.md 可能超限。
-
----
-
-## 📦 安装文件选择
-
-| 平台 | 用哪个文件 | 怎么装 |
-|------|-----------|--------|
-| OpenClaw | `SKILL.md` + 整个 `references/` | 放到 `skills/prompt-optimizer/` |
-| Claude Code | `SKILL.md` + 整个 `references/` | 放到项目目录，`CLAUDE.md` 引用 |
-| Cursor | `SKILL.md` + 整个 `references/` | 放到项目目录，`.cursorrules` 引用 |
-| Gemini CLI | `SKILL.md` + 小类别 JSON | 放到项目目录，系统指令引用 |
-| Cline/龙虾 | `SKILL.md` + 整个 `references/` | 放到项目目录，自定义指令引用 |
-| ChatGPT GPT | `STANDALONE-GPT.md` | 粘贴到 Instructions |
-| Aider | `SKILL.md` | 放到项目目录 |
+**Install:** Place skill folder in project. Reference with `--file`.
+**Recommended Mode:** `"引擎设为纯LLM"` (saves context space).
+**Limitation:** Aider is designed for code editing; general chat feels unnatural. System prompt may be too long with SKILL.md added.
 
 ---
 
-## 🎯 默认配置
+## 📦 Installation Guide
 
-| 设置项 | 默认值 | 可选值 |
-|--------|--------|--------|
-| 引擎 | **模板优先 + LLM 兜底** | 模板优先 / 纯LLM / 仅模板 |
-| 模板库版本 | **简易版**（~3MB） | 简易版 / 完整版（~10MB） |
-| 加载类别 | **编程开发**（1672 条，~1.5MB） | 14 个类别任意组合 |
-| 输出格式 | **纯文本** | 纯文本 / Markdown / XML / 全部 |
-| 状态 | **默认关闭**，需手动开启 | — |
+| Platform | Files to Use | How to Install |
+|----------|-------------|----------------|
+| OpenClaw | `SKILL.md` + all of `references/` | Place in `skills/prompt-optimizer/` |
+| Claude Code | `SKILL.md` + all of `references/` | Copy to project, reference in `CLAUDE.md` |
+| Cursor | `SKILL.md` + all of `references/` | Copy to project, reference in `.cursorrules` |
+| Gemini CLI | `SKILL.md` + small category JSONs | Copy to project, reference in system instructions |
+| Cline | `SKILL.md` + all of `references/` | Copy to project, reference in custom instructions |
+| ChatGPT GPT | `STANDALONE-GPT.md` | Paste into Custom GPT Instructions |
+| Aider | `SKILL.md` | Copy to project directory |
 
 ---
 
-## 🚀 快速开始
+## 🎯 Default Configuration
 
-| 操作 | 指令 |
-|------|------|
-| 开启 | "开启提示词优化" |
-| 开启（完整版） | "开启完整版提示词优化" |
-| 关闭 | "关闭提示词优化" |
+| Setting | Default | Options |
+|---------|---------|---------|
+| Engine | **Template-first + LLM fallback** | Template-first / LLM-only / Template-only |
+| Library Version | **Lite** (~3MB, truncated at 800 chars) | Lite / Full (~10MB) |
+| Category | **Coding** (1,672 prompts, ~1.5MB) | Any combination of 14 categories |
+| Output Format | **Plain text** | Plain text / Markdown / XML / All |
+| State | **Off by default**, manually enable | — |
 
-**最简用法：**
+---
+
+## 🚀 Quick Start
+
+| Action | Command |
+|--------|---------|
+| Enable | "开启提示词优化" (or "enable prompt optimizer") |
+| Enable (Full) | "开启完整版提示词优化" |
+| Disable | "关闭提示词优化" |
+
+**Minimal usage:**
 ```
-你："开启提示词优化"
-你："优化这个：帮我写个登录页面"
-助手：输出优化后的 prompt
-你："✅"
-```
-
----
-
-## ⚙️ 所有配置指令
-
-### 引擎模式
-
-| 指令 | 行为 |
-|------|------|
-| "引擎设为模板优先"（默认） | 先查模板库，匹配不到自动让 LLM 生成 |
-| "引擎设为纯LLM" | 跳过模板库，宿主 AI 直接优化 |
-| "引擎设为仅模板" | 只查模板库，匹配不到就告诉你 |
-
-### 模板类别
-
-| 指令 | 行为 |
-|------|------|
-| "只加载编程开发的模板"（默认） | 只读 1.5MB |
-| "加载编程+数据分析" | 组合加载 |
-| "有哪些类别可选" | 查看全部 14 个类别 |
-| "加载全部类别" | 加载完整库 |
-| "移除艺术娱乐" | 移除已加载的类别 |
-
-| 类别 | 数量 | 大小 |
-|------|------|------|
-| **编程开发**（默认） | 1,672 | ~1.5MB |
-| 艺术娱乐 | 404 | ~411KB |
-| 其他 | 253 | ~202KB |
-| 写作创作 | 208 | ~196KB |
-| 教育学习 | 117 | ~107KB |
-| 顾问咨询 | 114 | ~115KB |
-| 商业职场 | 108 | ~98KB |
-| 生活健康 | 82 | ~76KB |
-| 法律金融 | 82 | ~80KB |
-| 数据分析 | 73 | ~73KB |
-| 创意生成 | 73 | ~66KB |
-| 科学研究 | 61 | ~55KB |
-| 语言翻译 | 60 | ~57KB |
-| 技术工具 | 37 | ~36KB |
-
-### 输出格式
-
-| 指令 | 效果 |
-|------|------|
-| "输出格式设为纯文本"（默认） | 直接输出 prompt |
-| "输出格式设为 Markdown" | 标题/列表/加粗格式包裹 |
-| "输出格式设为 XML" | `<prompt><role>...</role></prompt>` 结构 |
-| "输出格式设为全部" | 三种格式同时输出 |
-
----
-
-## 📋 优化后可选操作
-
-| 回复 | 作用 |
-|------|------|
-| "✅" | 确认使用 |
-| "❌" | 放弃，用原始输入 |
-| 直接提修改意见 | 微调（如"加个响应式设计"） |
-| "继续优化" | 再迭代一轮 |
-| "评估" | 对优化前后打分对比 |
-| "换格式" | 切换输出格式 |
-
----
-
-## 📊 质量评估
-
-说"评估"触发，5 维度打分（各 1-10 分）：
-
-| 维度 | 评估什么 |
-|------|----------|
-| goalClarity | 目标清晰度 |
-| instructionCompleteness | 指令完整性 |
-| structuralExecutability | 结构可执行性 |
-| ambiguityControl | 歧义控制 |
-| robustness | 鲁棒性 |
-
-输出：原始 vs 优化后评分 + 总分提升 + 改进亮点 + 可优化方向。
-
----
-
-## 🧠 四种优化模式
-
-| 模式 | 触发条件 | 说明 |
-|------|----------|------|
-| **通用优化**（默认） | 大多数场景 | Role/Profile/Skills/Rules/Workflows 结构化 |
-| **分析式优化** | 复杂场景 | 8 维度深度分析，每维度 5 要点 |
-| **迭代优化** | 说"继续优化" | 在已有 prompt 上融入新需求 |
-| **用户 Prompt 精炼** | 优化用户查询 | 补齐目标/范围/参数/输出格式 |
-
----
-
-## 🔧 完整工作流
-
-```
-1. 开启 → 检测平台能力 → 加载默认配置
-   ├─ 文件系统可用 → 模板引擎就绪
-   └─ 文件系统不可用 → 自动切换纯 LLM 模式
-2. 用户输入提示词
-3. 解析意图（目标、领域、角色、约束、复杂度）
-4. 引擎路由：
-   ├─ 模板优先：查库 → 成功 → CRAFT 输出 / 失败 → LLM 兜底
-   ├─ 纯LLM：meta-prompt 直接生成
-   └─ 仅模板：查库 → 成功 → 输出 / 失败 → 告知用户
-5. 质量增强（精确指令 + 边界约束 + 示例）
-6. 确认交付
-7. 可选：评估 / 迭代 / 微调
+You: "开启提示词优化"
+You: "优化这个：帮我写个登录页面"
+Bot: [outputs optimized prompt]
+You: "✅"
 ```
 
 ---
 
-## 🗂️ 模板库数据
+## ⚙️ All Configuration Commands
 
-来自 7 个主流仓库，共 **3,344 条**：
+### Engine Mode
 
-| 来源 | 说明 |
-|------|------|
-| f/awesome-chatgpt-prompts | CSV，5MB |
-| awesome-chatgpt-prompts（原版） | CSV |
-| ai-boost/awesome-prompts | 228 个高质量详细提示词 |
-| 0xeb/TheBigPromptLibrary | 115 个系统提示词 |
-| jamesponddotko/llm-prompts | 分类库 |
-| chatgpt-prompts-chinese | 中文提示词 |
-| Prompt Garden | 社区贡献 |
+| Command | Behavior |
+|---------|----------|
+| "引擎设为模板优先" (default) | Search template library first; if no match, auto-fallback to LLM |
+| "引擎设为纯LLM" | Skip template library; host AI optimizes directly |
+| "引擎设为仅模板" | Template library only; tells user if no match found |
+
+### Template Categories
+
+| Command | Behavior |
+|---------|----------|
+| "只加载编程开发的模板" (default) | Loads only ~1.5MB |
+| "加载编程+数据分析" | Load multiple categories |
+| "有哪些类别可选" | Show all 14 categories |
+| "加载全部类别" | Load complete library |
+| "移除艺术娱乐" | Remove a loaded category |
+
+| Category | Prompts | Size |
+|----------|---------|------|
+| **Coding** (default) | 1,672 | ~1.5MB |
+| Art & Entertainment | 404 | ~411KB |
+| Other | 253 | ~202KB |
+| Writing | 208 | ~196KB |
+| Education | 117 | ~107KB |
+| Consulting | 114 | ~115KB |
+| Business | 108 | ~98KB |
+| Health & Lifestyle | 82 | ~76KB |
+| Legal & Finance | 82 | ~80KB |
+| Data Analysis | 73 | ~73KB |
+| Creative Generation | 73 | ~66KB |
+| Science & Research | 61 | ~55KB |
+| Translation | 60 | ~57KB |
+| Tech Tools | 37 | ~36KB |
+
+### Output Format
+
+| Command | Effect |
+|---------|--------|
+| "输出格式设为纯文本" (default) | Raw prompt text |
+| "输出格式设为 Markdown" | Headings, lists, bold formatting |
+| "输出格式设为 XML" | `<prompt><role>...</role></prompt>` structure |
+| "输出格式设为全部" | All three formats side by side |
 
 ---
 
-## 📂 文件结构
+## 📋 Post-Optimization Actions
+
+| Reply | Action |
+|-------|--------|
+| "✅" | Confirm and use |
+| "❌" | Discard; use original input |
+| Free-form feedback | Fine-tune (e.g., "add responsive design") |
+| "继续优化" | Iterate another round |
+| "评估" | Show before/after quality scores |
+| "换格式" | Switch output format |
+
+---
+
+## 📊 Quality Evaluation
+
+Say "评估" to trigger a before/after comparison. Scores 1-10 on 5 dimensions:
+
+| Dimension | What It Measures |
+|-----------|-----------------|
+| goalClarity | Is the goal clear and specific? |
+| instructionCompleteness | Are instructions complete and unambiguous? |
+| structuralExecutability | Can the structure be executed step by step? |
+| ambiguityControl | Are vague terms eliminated? |
+| robustness | Will it hold up across varied inputs? |
+
+Output: Before vs. After scores + total improvement + highlights + remaining gaps.
+
+---
+
+## 🧠 Four Optimization Modes
+
+| Mode | When | What It Does |
+|------|------|-------------|
+| **General** (default) | Most scenarios | Structured Role/Profile/Skills/Rules/Workflows output |
+| **Analytical** | Complex scenarios | 8-dimension deep analysis, 5 points per dimension |
+| **Iterative** | Say "继续优化" | Merges new requirements into existing prompt |
+| **User Query Refinement** | Optimizing user queries | Adds clarity, scope, parameters, output format |
+
+---
+
+## 🔧 Full Workflow
+
+```
+1. Enable → Detect platform capabilities → Load defaults
+   ├─ File system available → Template engine ready
+   └─ File system unavailable → Auto-switch to LLM-only mode
+2. User submits prompt
+3. Parse intent (goal, domain, role, constraints, complexity)
+4. Engine routing:
+   ├─ Template-first: Search → Match → CRAFT output / No match → LLM fallback
+   ├─ LLM-only: Meta-prompt generates directly
+   └─ Template-only: Search → Match → output / No match → notify user
+5. Quality enhancement (precise instructions + constraints + examples)
+6. Confirm & deliver
+7. Optional: Evaluate / Iterate / Fine-tune
+```
+
+---
+
+## 🗂️ Template Library Data
+
+Curated from 7 major repositories, **3,344 prompts total**:
+
+| Source | Description |
+|--------|-------------|
+| f/awesome-chatgpt-prompts | CSV, 5MB |
+| awesome-chatgpt-prompts (original) | CSV format |
+| ai-boost/awesome-prompts | 228 high-quality detailed prompts |
+| 0xeb/TheBigPromptLibrary | 115 system prompts |
+| jamesponddotko/llm-prompts | Categorized library |
+| chatgpt-prompts-chinese | Chinese prompts |
+| Prompt Garden | Community contributions |
+
+---
+
+## 📂 File Structure
 
 ```
 prompt-optimizer/
-├── SKILL.md                  # 核心指令（v4.0，完整功能）
-├── STANDALONE-GPT.md         # ChatGPT Custom GPT 精简版
-├── STANDALONE.md             # 独立使用说明
-├── README.md                 # 本文件
+├── SKILL.md                          # Core instructions (v4.0, full features)
+├── STANDALONE-GPT.md                 # ChatGPT Custom GPT lite version
+├── STANDALONE.md                     # Standalone usage guide
+├── README.md                         # This file
 ├── references/
-│   ├── prompt_library_full.json      # 完整版（~10MB）
-│   ├── prompt_library_lite.json      # 简易版（~3MB）
-│   └── categories/                   # 按类别拆分
+│   ├── prompt_library_full.json      # Full version (~10MB)
+│   ├── prompt_library_lite.json      # Lite version (~3MB)
+│   └── categories/                   # Split by category
 │       ├── index.json
-│       ├── 编程开发.json              # 默认加载
-│       └── ...（14 个类别）
-└── scripts/
+│       ├── 编程开发.json              # Default (Coding)
+│       └── ... (14 categories)
+└── scripts/                          # Build and maintenance scripts
 ```
 
 ---
 
-## 🛡️ 特性
+## 🛡️ Features
 
-- **零 API 成本** — 宿主 AI 直接优化，不需要额外付费
-- **自动平台检测** — 文件系统不可用时自动降级
-- **双引擎** — 模板库 + LLM 元提示
-- **按类别加载** — 省 token
-- **Model-agnostic** — 所有宿主 AI 通用
-- **双语** — 中文→中文 prompt，英文→英文
-- **质量评估** — 5 维度打分
-- **迭代优化** — 多轮微调
+- **Zero API Cost** — Host AI optimizes directly, no extra charges
+- **Auto Platform Detection** — Graceful degradation when file system unavailable
+- **Dual Engine** — Template library + LLM meta-prompting
+- **Category Loading** — Load only what you need, save tokens
+- **Model-Agnostic** — Works with all host AI platforms
+- **Bilingual** — Chinese input → Chinese prompt; English → English
+- **Quality Evaluation** — 5-dimension scoring
+- **Iterative Optimization** — Multi-round fine-tuning
