@@ -1,75 +1,128 @@
 ---
 name: prompt-optimizer
-version: 4.0.0
-description: Transform vague user requests into precise, high-quality prompts. Two engines: template matching (3300+ library) + LLM meta-prompting (host AI as optimizer). Only activates when the user explicitly turns it on.
+version: 4.1.0
+description: "Transform vague user requests into precise, high-quality prompts. Two engines: template matching (3300+ library) + LLM meta-prompting (host AI as optimizer). Only activates when the user explicitly turns it on."
 ---
 
 # Prompt Optimizer
 
-双引擎提示词优化：**模板匹配**（3300+ 模板库）+ **LLM 元提示**（宿主 AI 直接优化）。
+Dual-engine prompt optimization: **template matching** (3,300+ template library) + **LLM meta-prompting** (the host AI optimizes directly).
 
-## 平台适配（自动检测）
+## Platform Adaptation (auto-detected)
 
-Skill 启动时自动检测当前宿主平台的能力，降级不可用功能：
+On startup the skill probes the host platform's capabilities and degrades unavailable features:
 
-| 能力 | 检测方式 | 有 → 正常 | 没有 → 降级 |
+| Capability | Detection | Present → behavior | Absent → fallback |
 |------|----------|-----------|------------|
-| 文件读取 | 尝试读 `references/categories/index.json` | 模板引擎可用 | 强制切换到 `llm-only` 模式，隐藏模板相关指令 |
-| 文件写入 | 尝试写 `memory/prompt_optimizer_state.json` | 状态持久化 | 对话内记忆状态，不写文件 |
-| 大文件处理 | 读取 `categories/coding.json`（1.5MB） | 按类别加载 | 只能用小类别或纯 LLM |
+| File reading | Try reading `references/categories/index.json` | Template engine available | Force `llm-only` mode; hide template-related instructions |
+| File writing | Try writing `memory/prompt_optimizer_state.json` | State persistence | In-conversation memory only; write no files |
+| Large-file handling | Read `categories/coding.json` (1.5MB) | Load by category | Small categories or pure LLM only |
 
-**启动时行为：**
-1. 尝试读取 `references/categories/index.json`
-   - 成功 → 模板引擎可用，继续检测写入能力
-   - 失败 → 告知用户「当前平台不支持文件读取，已自动切换为纯 LLM 模式」
-2. 尝试写入 `memory/prompt_optimizer_state.json`
-   - 成功 → 持久化正常
-   - 失败 → 对话内记忆，提示用户「状态仅在当前对话有效」
+**Startup behavior:**
+1. Try to read `references/categories/index.json`
+   - Success → template engine available; continue to write-capability check
+   - Failure → inform the user: "This platform does not support file reading; automatically switched to pure LLM mode"
+2. Try to write `memory/prompt_optimizer_state.json`
+   - Success → persistence works
+   - Failure → in-conversation memory; tell the user "state is valid only for this conversation"
 
-## 开关机制
+## Onboarding (first use)
 
-**默认关闭**，用户明确指令才激活。
+When the user first mentions prompt optimization and `memory/prompt_optimizer_state.json` does not exist, run a one-time onboarding:
 
-| 操作 | 指令示例 |
+1. **Introduce the capability** (one sentence): _"Prompt Optimizer turns vague instructions into precise, structured prompts, with two engines: template matching + direct AI optimization."_
+
+2. **Ask a few quick configuration questions:**
+   - **a) What do you mainly use prompts for?**
+     - Coding/development → default-load the `coding` category
+     - Writing/content creation → default-load `writing` + `creative-generation`
+     - Business/consulting → default-load `business` + `consulting`
+     - Education → default-load `education`
+     - A bit of everything → default-load `coding` (50% of the library; widest coverage)
+
+   - **b) Engine preference?**
+     - "Fast and token-saving" → `template-first` (default)
+     - "Deep customization" → `llm-only`
+     - "Templates only" → `template-only`
+
+   - **c) Output format preference?**
+     - Plain text (default)
+     - Markdown
+     - XML
+     - All of them
+
+   - **d) Template edition?**
+     - Lite (fast everyday optimization)
+     - Full (formal projects, more comprehensive)
+
+3. **Write the initial state file** `memory/prompt_optimizer_state.json`:
+   ```json
+   {
+     "enabled": true,
+     "mode": "lite|full",
+     "engine": "template-first|llm-only|template-only",
+     "output_format": "text|markdown|xml|all",
+     "categories": ["..."],
+     "onboarded": true,
+     "turned_on_at": "ISO timestamp"
+   }
+   ```
+
+4. **Confirm completion**: _"Setup done! Just send me a prompt from now on and I'll optimize it. Say 'switch engine' or 'load new category' anytime to adjust."_
+
+**Onboarding runs exactly once**; every later activation reads the state file directly.
+
+## Toggle Mechanism
+
+**Off by default**; activates only on an explicit user instruction.
+
+| Action | Example commands |
 |---|---|
-| 开启 | "开启提示词优化"、"开启简易版" |
-| 开启（完整版） | "开启完整版提示词优化" |
-| 关闭 | "关闭提示词优化" |
-| 设置引擎 | "引擎设为..."（见下方） |
-| 设置输出格式 | "输出格式设为 Markdown/XML/纯文本/全部" |
+| Turn on | "turn on prompt optimization", "enable lite mode" |
+| Turn on (full) | "enable full prompt optimization" |
+| Turn off | "turn off prompt optimization" |
+| Set engine | "set engine to ..." (see below) |
+| Set output format | "set output format to Markdown / XML / plain text / all" |
 
-## 🔄 引擎模式（用户可选）
+## 🔄 Engine Modes (user-selectable)
 
-| 模式 | 指令 | 原理 | 适用场景 |
+| Mode | Command | Mechanism | Best for |
 |------|------|------|----------|
-| **模板优先 + LLM 兜底**（默认） | "引擎设为模板优先" | 先查模板库，匹配不到再让 LLM 生成 | 日常使用，省 token |
-| **LLM 直接** | "引擎设为纯LLM" | 跳过模板库，直接让宿主 AI 优化 | 定制化需求、模板覆盖不到的领域 |
-| **仅模板** | "引擎设为仅模板" | 只查模板库，匹配不到就告知用户 | 追求速度、不消耗额外 token |
+| **Template-first + LLM fallback** (default) | "set engine to template-first" | Search the library first; if no match, let the LLM generate | Daily use; token-saving |
+| **Pure LLM** | "set engine to llm-only" | Skip the library; the host AI optimizes directly | Custom needs, domains the library doesn't cover |
+| **Template-only** | "set engine to template-only" | Library only; report when nothing matches | Maximum speed; zero extra tokens |
 
-**LLM 元提示的核心思路：** 本 Skill 运行在宿主 AI 内部（OpenClaw/Claude Code/龙须等），宿主 AI 本身就是优化引擎。不需要调外部 API，直接让当前 AI 以「提示词优化专家」的身份工作。
+**Core idea of LLM meta-prompting:** this skill runs inside the host AI (OpenClaw / Claude Code / etc.), so the host AI itself is the optimization engine. No external API calls — the current AI simply works as a "prompt optimization expert".
 
-**版本区别：**
-- **简易版**（`references/prompt_library_lite.json`，~3MB，截断 800 字符）：日常快速优化
-- **完整版**（`references/prompt_library_full.json`，~10MB，完整不截断）：正式项目
+**Edition differences:**
+- **Lite** (~3MB, templates truncated to 800 chars): fast everyday optimization
+- **Full** (~10MB, complete, untruncated): formal projects
 
-### 📦 按类别加载（推荐，省 token）
+> 📦 **The template library files are NOT included in the ClawHub package** (too large). Fetch from GitHub:
+> - Lite: `https://raw.githubusercontent.com/Thomaszhou22/prompt-optimizer-skill/main/references/prompt_library_lite.json`
+> - Full: `https://raw.githubusercontent.com/Thomaszhou22/prompt-optimizer-skill/main/references/prompt_library_full.json`
+> - Categories: `https://github.com/Thomaszhou22/prompt-optimizer-skill/tree/main/references/categories`
+>
+> Run `git clone https://github.com/Thomaszhou22/prompt-optimizer-skill.git` for the full library.
 
-不用加载全部 3344 条，可以只加载你需要的类别：
+### 📦 Load by Category (recommended; saves tokens)
 
-| 操作 | 指令示例 |
+You don't need all 3,344 templates — load only the categories you need:
+
+| Action | Example commands |
 |---|---|
-| 加载特定类别 | "只加载coding的模板"、"加载编程+data-analysis" |
-| 查看可选类别 | "有哪些类别可选" |
-| 加载全部 | "加载全部类别" |
-| 移除类别 | "移除art-entertainment" |
+| Load specific categories | "load only coding templates", "load coding + data-analysis" |
+| List available categories | "which categories are available" |
+| Load everything | "load all categories" |
+| Remove a category | "remove art-entertainment" |
 
-**类别文件位置：** `references/categories/{类别名}.json`
+**Category file locations:** `references/categories/{category}.json`
 
-| 类别 | 数量 | 文件大小 |
+| Category | Count | File size |
 |------|------|----------|
 | coding | 1672 | ~1.5MB |
 | art-entertainment | 404 | ~411KB |
-| 其他 | 253 | ~202KB |
+| other | 253 | ~202KB |
 | writing | 208 | ~196KB |
 | education | 117 | ~107KB |
 | consulting | 114 | ~115KB |
@@ -82,256 +135,256 @@ Skill 启动时自动检测当前宿主平台的能力，降级不可用功能�
 | translation | 60 | ~57KB |
 | tech-tools | 37 | ~36KB |
 
-**加载优先级：** 指定类别 → 加载对应 `categories/` 文件；未指定类别 → 加载完整 lite/full 文件。
+**Loading priority:** category specified → load the corresponding `categories/` file; no category specified → load the full lite/full file.
 
-默认引擎 `template-first`，default category `coding`（占模板库 50%，最常用）。用户可随时切换。
+Default engine `template-first`, default category `coding` (50% of the library; most used). The user can switch anytime.
 
-状态持久化到 `memory/prompt_optimizer_state.json`：
+State persists to `memory/prompt_optimizer_state.json`:
 ```json
 {"enabled": true, "mode": "lite", "engine": "template-first", "output_format": "text", "categories": ["coding"], "turned_on_at": "2026-05-19T16:05:00+08:00"}
 ```
 
-engine 可选值：`"template-first"`（默认） | `"llm-only"` | `"template-only"`
+Allowed `engine` values: `"template-first"` (default) | `"llm-only"` | `"template-only"`
 
-**输出格式说明：**
-- **纯文本**（默认）：直接输出 prompt 内容
-- **Markdown**：用 `##` 标题、`-` 列表、`**加粗**` 等格式包裹
-- **XML**：用 `<prompt><role>...</role><action>...</action></prompt>` 结构包裹
-- **全部**：同时输出三种格式，用户自选
+**Output format notes:**
+- **Plain text** (default): output the prompt content directly
+- **Markdown**: wrap with `##` headings, `-` lists, `**bold**`, etc.
+- **XML**: wrap in `<prompt><role>...</role><action>...</action></prompt>` structure
+- **All**: output all three formats and let the user choose
 
-**判断逻辑：** 收到消息 → 检查状态文件 → 开关/切换指令则更新状态 → 关闭中则忽略 → 开启中则执行下方工作流。
+**Decision logic:** message received → read state file → if it's a toggle/switch command, update state → if off, ignore → if on, run the workflow below.
 
-## 智能跳过
+## Smart Skip
 
-开启中但消息是简单日常对话（"你好"、"今天天气"、"谢谢"）→ 不触发优化，正常回复。
+When enabled but the message is casual conversation ("hi", "nice weather", "thanks") → do not trigger optimization; reply normally.
 
 ## Workflow
 
-### Step 0: 引擎与版本建议
+### Step 0: Engine & Edition Recommendation
 
-评估任务复杂度和引擎匹配度：
-- **→ LLM 模式信号**：高度定制化需求、模板库无覆盖领域、用户要求"深度分析"、创意/复杂逻辑任务
-- **→ 模板模式信号**：常见编程/写作/商业场景、快速优化、省 token
-- **→ 完整版信号**：多步骤/多领域、长文档、深度分析
-- **→ 简易版信号**：简单问答/翻译、一句话任务
+Assess task complexity and engine fit:
+- **→ LLM-mode signals**: highly customized needs, domains the library doesn't cover, user asks for "deep analysis", creative/complex-logic tasks
+- **→ Template-mode signals**: common coding/writing/business scenarios, quick optimization, token saving
+- **→ Full-edition signals**: multi-step / multi-domain, long documents, deep analysis
+- **→ Lite-edition signals**: simple Q&A / translation, one-sentence tasks
 
-输出建议后等用户回复 "切换" 或 "继续"。
+Output the recommendation and wait for the user to reply "switch" or "continue".
 
-### Step 1: 解析意图
+### Step 1: Parse Intent
 
-识别：目标（Goal）、领域（Domain）、角色（Role）、约束（Constraints：格式/语言/受众/长度）、复杂度。
+Identify: goal, domain, role, constraints (format / language / audience / length), complexity.
 
-### Step 2: 引擎路由
+### Step 2: Engine Routing
 
-根据状态中 `engine` 值决定执行路径：
+Follow the `engine` value in state:
 
-| engine | 路径 |
+| engine | Path |
 |--------|------|
-| `template-first`（默认） | 执行 Step 2a → 若匹配成功走 CRAFT → 若匹配失败自动跳 Step 3 LLM 兜底 |
-| `llm-only` | 跳过模板库，直接执行 Step 3 |
-| `template-only` | 执行 Step 2a → 若匹配失败告知用户，不调 LLM |
+| `template-first` (default) | Run Step 2a → on match, proceed to CRAFT → on miss, auto-fall back to Step 3 |
+| `llm-only` | Skip the library; go straight to Step 3 |
+| `template-only` | Run Step 2a → on miss, tell the user; do not call the LLM |
 
-### Step 2a: 模板搜索
+### Step 2a: Template Search
 
-**数据源选择：**
-1. 若状态中 `categories` 非空 → 只读取 `references/categories/{类别}.json` 中指定的类别文件
-2. 若 `categories` 为空或不存在 → 读取完整库文件（lite 或 full）
+**Data source selection:**
+1. If `categories` in state is non-empty → read only the listed `references/categories/{category}.json` files
+2. If `categories` is empty or missing → read the full library file (lite or full)
 
-按以下规则匹配 1-3 个最相关模板：
-- Role name 与用户目标相似度
-- 关键词重叠
-- 领域分类匹配
+Match the 1-3 most relevant templates by:
+- Similarity between role name and user goal
+- Keyword overlap
+- Domain category match
 
-分类：coding | writing | education | business | health-lifestyle | tech-tools | translation | art-entertainment | consulting | creative-generation | data-analysis | science-research | legal-finance | 其他
+Categories: coding | writing | education | business | health-lifestyle | tech-tools | translation | art-entertainment | consulting | creative-generation | data-analysis | science-research | legal-finance | other
 
-**匹配失败处理（template-first 模式）：** 自动告知用户「模板库未匹配到，正在用 LLM 直接优化」，然后跳到 Step 3。
+**On match failure (template-first mode):** automatically tell the user "no template matched; optimizing directly with the LLM", then jump to Step 3.
 
-### Step 3: LLM 元提示优化
+### Step 3: LLM Meta-Prompt Optimization
 
-**这是核心新增能力。** 宿主 AI 以「提示词优化专家」身份，根据优化类型选择对应的 meta-prompt 框架：
+**This is the core capability.** The host AI acts as a "prompt optimization expert" and picks the matching meta-prompt framework by optimization type:
 
-#### 3a. 通用优化（默认）
+#### 3a. General Optimization (default)
 
-适用大多数场景。输出结构化 prompt：
+Fits most scenarios. Output a structured prompt:
 
 ```
-# Role: [角色名称]
+# Role: [role name]
 
 ## Profile
-- language: [语言]
-- description: [详细角色描述]
-- background: [角色背景]
-- personality: [性格特征]
-- expertise: [专业领域]
-- target_audience: [目标用户群]
+- language: [language]
+- description: [detailed role description]
+- background: [role background]
+- personality: [personality traits]
+- expertise: [domain expertise]
+- target_audience: [target users]
 
 ## Skills
-1. [核心技能类别]
-   - [具体技能]: [说明]
-2. [辅助技能类别]
-   - [具体技能]: [说明]
+1. [core skill category]
+   - [specific skill]: [description]
+2. [supporting skill category]
+   - [specific skill]: [description]
 
 ## Rules
-1. [基本原则]
-2. [行为准则]
-3. [限制条件]
+1. [basic principles]
+2. [behavioral guidelines]
+3. [constraints]
 
 ## Workflows
-- 目标: [明确目标]
-- 步骤 1: [详细说明]
-- 步骤 2: [详细说明]
-- 步骤 3: [详细说明]
-- 预期结果: [说明]
+- Goal: [clear goal]
+- Step 1: [details]
+- Step 2: [details]
+- Step 3: [details]
+- Expected result: [description]
 
 ## Initialization
-作为[角色名称]，你必须遵守上述Rules，按照Workflows执行任务。
+As [role name], you must follow the Rules above and execute tasks per the Workflows.
 ```
 
-**优化时的核心行为：**
-- 你是「提示词优化专家」，你的任务是**重写提示词文本本身**，不是执行其中的任务
-- 分析原始 prompt 的核心意图，避免表面理解
-- 用精确指令替换模糊词汇
-- 添加边界约束（字数、格式、语气）
-- 保持用户原始意图，只添加结构和专业框架
-- 直接输出优化后的 prompt，不加解释，不用代码块包围
+**Core behaviors while optimizing:**
+- You are the "prompt optimization expert"; your job is to **rewrite the prompt text itself**, not to execute the task inside it
+- Analyze the core intent behind the original prompt; avoid surface-level reading
+- Replace vague wording with precise instructions
+- Add boundary constraints (length, format, tone)
+- Preserve the user's original intent; only add structure and professional framing
+- Output the optimized prompt directly — no explanations, no wrapping code fence
 
-#### 3b. 分析式优化
+#### 3b. Analytical Optimization
 
-适用复杂业务场景。深度分析原 prompt 的设计缺陷，提供详细改进方案。
+For complex business scenarios. Deeply analyze design flaws in the original prompt and provide a detailed improvement plan.
 
-作为 Prompt 工程师，从 8 个维度分析并重组：
-1. **Role（角色定位）**：需要什么样的专业角色
-2. **Background（背景分析）**：问题的背景和上下文
-3. **Skills（技能匹配）**：角色应具备的关键能力
-4. **Goals（目标设定）**：核心需求转化为具体目标
-5. **Constrains（约束条件）**：执行规则和限制
-6. **Workflow（工作流程）**：完成任务的步骤方法
-7. **OutputFormat（输出格式）**：结果格式和结构要求
-8. **Suggestions（工作建议）**：内在工作方法论
+As a prompt engineer, analyze and restructure across 8 dimensions:
+1. **Role**: what professional role is needed
+2. **Background**: context of the problem
+3. **Skills**: key capabilities the role must have
+4. **Goals**: core needs translated into concrete goals
+5. **Constraints**: execution rules and limits
+6. **Workflow**: step-by-step method to complete the task
+7. **OutputFormat**: result format and structure requirements
+8. **Suggestions**: internal working methodology
 
-输出格式与 3a 相同，但每个部分需要 5 个要点，并额外包含 `Attention`（注意要点）和 `Suggestions`（工作方法论）部分。
+Output format is the same as 3a, but each section needs 5 bullet points, plus extra `Attention` (key points) and `Suggestions` (methodology) sections.
 
-#### 3c. 迭代优化
+#### 3c. Iterative Optimization
 
-适用已有 prompt 需要微调的场景。
+For fine-tuning an existing prompt.
 
-**核心原则：**
-- 保持原始 prompt 的核心意图和功能
-- 将用户的新需求作为新的约束/要求融入
-- 保持原有语言风格和结构格式
-- 进行精准修改，避免过度调整
-- 保留原始 prompt 中的变量占位符（如 `{{variable}}`）
+**Core principles:**
+- Preserve the original prompt's core intent and function
+- Fold the user's new requirement in as a new constraint
+- Keep the original language style and structural format
+- Make surgical edits; avoid over-adjusting
+- Keep variable placeholders from the original prompt (e.g. `{{variable}}`)
 
-**理解示例：**
-- 原始："你是客服助手，帮用户解决问题" + 需求："不要交互"
-- ✅ 正确："你是客服助手，帮用户解决问题。请直接提供完整解决方案，不要与用户进行多轮交互确认。"
-- ❌ 错误：直接回复"好的，我不会与您交互"（你在执行任务而不是优化 prompt）
+**Comprehension example:**
+- Original: "You are a customer-service assistant; help users solve problems" + request: "no interaction"
+- ✅ Correct: "You are a customer-service assistant; help users solve problems. Provide the complete solution directly; do not run multi-turn confirmations with the user."
+- ❌ Wrong: replying "OK, I won't interact with you" (you would be executing the task instead of optimizing the prompt)
 
-#### 3d. 用户 Prompt 精炼
+#### 3d. User-Prompt Refinement
 
-适用优化用户输入的查询（非系统 prompt）。
+For optimizing user-typed queries (not system prompts).
 
-将用户的原始查询精炼为「明确、具体、可执行、可验证」的用户提示词文本：
-- 补齐目标、范围、参数
-- 明确输出格式与验收标准
-- 保留原始表述风格，仅做最小充分精炼
-- 不改变用户的原始意图
+Refine the user's raw query into a user prompt that is "clear, specific, executable, verifiable":
+- Fill in goal, scope, parameters
+- Make output format and acceptance criteria explicit
+- Keep the original phrasing style; apply only minimal sufficient refinement
+- Never change the user's original intent
 
-### Step 4: 质量评估（可选，用户说"评估"或"打分"时触发）
+### Step 4: Quality Assessment (optional; triggered when the user says "assess" or "score")
 
-对优化前后的 prompt 进行对比评估，宿主 AI 以「提示词质量评估专家」身份打分。
+Compare the prompt before and after; the host AI acts as a "prompt quality assessor".
 
-**评估维度（每项 1-10 分）：**
+**Dimensions (each 1-10):**
 
-| 维度 | 说明 |
+| Dimension | Meaning |
 |------|------|
-| goalClarity | 目标是否清晰明确 |
-| instructionCompleteness | 指令是否完整无遗漏 |
-| structuralExecutability | 结构是否可执行、步骤是否明确 |
-| ambiguityControl | 歧义控制，是否有模糊表述 |
-| robustness | 鲁棒性，不同输入下是否稳定 |
+| goalClarity | Is the goal clear and explicit |
+| instructionCompleteness | Are instructions complete, nothing missing |
+| structuralExecutability | Is the structure executable, are steps explicit |
+| ambiguityControl | Ambiguity control; any vague wording |
+| robustness | Robustness across different inputs |
 
-**输出格式：**
+**Output format:**
 ```
-📊 质量评估报告
+📊 Quality Assessment Report
 
-原始 Prompt 评分：
-  目标清晰度: [X/10]
-  指令完整性: [X/10]
-  结构可执行性: [X/10]
-  歧义控制: [X/10]
-  鲁棒性: [X/10]
-  总分: [XX/50]
+Original prompt scores:
+  Goal clarity: [X/10]
+  Instruction completeness: [X/10]
+  Structural executability: [X/10]
+  Ambiguity control: [X/10]
+  Robustness: [X/10]
+  Total: [XX/50]
 
-优化后评分：
-  目标清晰度: [X/10]
-  指令完整性: [X/10]
-  结构可执行性: [X/10]
-  歧义控制: [X/10]
-  鲁棒性: [X/10]
-  总分: [XX/50]
+Optimized prompt scores:
+  Goal clarity: [X/10]
+  Instruction completeness: [X/10]
+  Structural executability: [X/10]
+  Ambiguity control: [X/10]
+  Robustness: [X/10]
+  Total: [XX/50]
 
-📈 提升: [+XX分]
+📈 Improvement: [+XX points]
 
-💡 改进亮点：
-  1. [具体改进点]
-  2. [具体改进点]
-  3. [具体改进点]
+💡 Improvement highlights:
+  1. [specific improvement]
+  2. [specific improvement]
+  3. [specific improvement]
 
-⚠️ 仍可优化：
-  1. [可进一步改进的方向]
-  2. [可进一步改进的方向]
+⚠️ Still improvable:
+  1. [further direction]
+  2. [further direction]
 ```
 
-**评估原则：**
-- 基于 prompt 文本本身评估，不执行 prompt
-- 客观打分，不要为了好看而虚高
-- 改进亮点要具体，指出哪里变好了
-- 仍可优化的建议要有可操作性
+**Assessment principles:**
+- Judge the prompt text itself; do not execute the prompt
+- Score objectively; no inflated numbers to look good
+- Highlights must be specific — point to what got better
+- Remaining suggestions must be actionable
 
-### Step 5: 质量增强
+### Step 5: Quality Enhancement
 
-对 Step 2（模板）或 Step 3（LLM）的输出统一增强：
-1. 用精确指令替换模糊词汇
-2. 添加边界约束（字数、格式、语气）
-3. 复杂任务加 1-shot 示例
-4. 推理任务加 "Let's think step by step"
-5. 明确定义预期输出结构
+Applied uniformly on top of Step 2 (template) or Step 3 (LLM) output:
+1. Replace vague wording with precise instructions
+2. Add boundary constraints (length, format, tone)
+3. Add a 1-shot example for complex tasks
+4. Add "Let's think step by step" for reasoning tasks
+5. Define the expected output structure explicitly
 
-默认 Level 2（标准 CRAFT），复杂分析/创意用 Level 3（+CoT+few-shot），快速优化用 Level 1（role+format）。
+Default Level 2 (standard CRAFT); Level 3 (+CoT +few-shot) for complex analysis/creative work; Level 1 (role+format) for quick optimization.
 
-### Step 5: 确认流程（必须执行）
+### Step 5: Confirmation Flow (must run)
 
-根据用户设定的输出格式（默认纯文本）生成对应格式的提示词。
+Generate the prompt in the user's configured output format (plain text by default).
 
 ---
-📋 **原始输入：** [用户原话]
-🔧 **引擎：** [模板匹配 / LLM元提示 / 双引擎]
-📎 **参考模板：** [模板名 或 "LLM直接生成"]
+📋 **Original input:** [user's words]
+🔧 **Engine:** [template match / LLM meta-prompt / dual engine]
+📎 **Reference template:** [template name or "generated directly by LLM"]
 
-✨ **优化后的提示词：**
+✨ **Optimized prompt:**
 ```
-[完整提示词 — 按用户设定的格式输出]
+[Full prompt — in the user's configured format]
 ```
 
-🔄 **改动说明：** [1-2 句]
-📎 **输出格式：** [纯文本/Markdown/XML/全部]
+🔄 **Change notes:** [1-2 sentences]
+📎 **Output format:** [plain text / Markdown / XML / all]
 
 ---
 
-👆 回复 "✅" 确认使用 / "❌" 放弃用原始输入 / 提修改意见微调 / "换格式" 更改输出格式 / "继续优化" 再迭代一轮 / "评估" 查看质量评分
+👆 Reply "✅" to use it / "❌" to discard and keep the original / give feedback to fine-tune / "change format" to switch output format / "optimize again" for another round / "assess" to see quality scores
 
-等待用户回复后再执行。
+Wait for the user's reply before executing.
 
 ## Guidelines
 
-- **多语言适配**：输出语言匹配用户输入（中文→中文 prompt，英文→英文）
-- 保持用户原始意图，只添加结构和专业框架
-- Model-agnostic：不使用特定模型语法，适用于所有宿主 AI
-- 意图模糊时先问 1-2 个澄清问题
-- 编程任务必须指定语言/框架，占位符用 `[placeholder]`
-- 长度自适应：简单任务简洁 prompt，复杂任务详细多段 prompt
-- 语气匹配任务（商业正式、创作创意、编程精确）
-- 多轮反馈时增量优化而非从头开始
-- 批量任务逐条优化，编号列表展示
-- **LLM 模式下你就是优化引擎本身**，不需要调外部 API，直接以专家身份输出
+- **Multilingual adaptation**: output language matches user input (Chinese → Chinese prompt, English → English)
+- Preserve the user's original intent; only add structure and professional framing
+- Model-agnostic: no model-specific syntax; works on any host AI
+- When intent is ambiguous, ask 1-2 clarifying questions first
+- Coding tasks must specify language/framework; use `[placeholder]` for placeholders
+- Adaptive length: concise prompts for simple tasks, detailed multi-section prompts for complex ones
+- Match tone to task (formal for business, creative for writing, precise for coding)
+- On multi-round feedback, optimize incrementally instead of starting over
+- Batch tasks: optimize one by one, presented as a numbered list
+- **In LLM mode you ARE the optimization engine** — no external API calls; output directly as the expert
