@@ -1,6 +1,6 @@
 ---
 name: prompt-optimizer
-version: 4.1.0
+version: 4.1.1
 description: "Transform vague user requests into precise, high-quality prompts. Two engines: template matching (3300+ library) + LLM meta-prompting (host AI as optimizer). Only activates when the user explicitly turns it on."
 ---
 
@@ -55,20 +55,20 @@ When the user first mentions prompt optimization and `memory/prompt_optimizer_st
      - Lite (fast everyday optimization)
      - Full (formal projects, more comprehensive)
 
-3. **Write the initial state file** `memory/prompt_optimizer_state.json`:
+3. **Write the initial state file** `memory/prompt_optimizer_state.json` (note: `enabled` stays `false` — preferences are saved, but the skill activates only when the user explicitly turns it on):
    ```json
    {
-     "enabled": true,
+     "enabled": false,
      "mode": "lite|full",
      "engine": "template-first|llm-only|template-only",
      "output_format": "text|markdown|xml|all",
      "categories": ["..."],
      "onboarded": true,
-     "turned_on_at": "ISO timestamp"
+     "turned_on_at": null
    }
    ```
 
-4. **Confirm completion**: _"Setup done! Just send me a prompt from now on and I'll optimize it. Say 'switch engine' or 'load new category' anytime to adjust."_
+4. **Confirm completion**: _"Preferences saved! The optimizer stays OFF until you say 'turn on prompt optimization' — then just send me any prompt and I'll optimize it. Say 'switch engine' or 'load new category' anytime to adjust."_
 
 **Onboarding runs exactly once**; every later activation reads the state file directly.
 
