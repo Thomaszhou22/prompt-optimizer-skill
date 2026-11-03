@@ -1,6 +1,6 @@
 ---
 name: prompt-optimizer
-version: 4.1.1
+version: 4.1.2
 description: "Transform vague user requests into precise, high-quality prompts. Two engines: template matching (3300+ library) + LLM meta-prompting (host AI as optimizer). Only activates when the user explicitly turns it on."
 ---
 
