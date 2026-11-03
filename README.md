@@ -2,6 +2,8 @@
 
 > **Dual-Engine Prompt Optimization Skill** — Template matching (3,344 library) + LLM meta-prompting (host AI as optimizer). Zero API cost.
 
+**English** | **[中文](README.zh-CN.md)**
+
 ---
 
 ## 🖥️ Platform Compatibility (Read This First!)
@@ -298,6 +300,7 @@ prompt-optimizer/
 ├── STANDALONE-GPT.md                 # ChatGPT Custom GPT lite version
 ├── STANDALONE.md                     # Standalone usage guide
 ├── README.md                         # This file
+├── README.zh-CN.md                   # 中文文档
 ├── references/
 │   ├── prompt_library_full.json      # Full version (~10MB)
 │   ├── prompt_library_lite.json      # Lite version (~3MB)
