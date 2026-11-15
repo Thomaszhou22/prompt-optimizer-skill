@@ -1,8 +1,8 @@
 # Prompt Optimizer
 
-> **Dual-Engine Prompt Optimization Skill** — Template matching (3,344 library) + LLM meta-prompting (host AI as optimizer). Zero API cost.
+[![ClawHub](https://img.shields.io/badge/ClawHub-install-orange)](https://clawhub.ai/thomaszhou22/mega-prompt-optimizer)
 
-**English** | **[中文](README.zh-CN.md)**
+> **Dual-Engine Prompt Optimization Skill** — Template matching (3,344 library) + LLM meta-prompting (host AI as optimizer). Zero API cost.
 
 ---
 
@@ -151,6 +151,19 @@ Different platforms have different capabilities. **Find yours below and follow t
 
 ## 🚀 Quick Start
 
+### First-Time Onboarding
+
+On first use, the skill walks you through a quick setup:
+
+1. **What you mainly use prompts for** → auto-selects the best template category (coding, writing, business, education, etc.)
+2. **Engine preference** → template-first (fast, saves tokens) / LLM-only (deep customization) / template-only
+3. **Output format** → plain text / Markdown / XML / all
+4. **Template version** → lite (~3MB, daily use) / full (~10MB, production)
+
+Settings are saved to `memory/prompt_optimizer_state.json`. Onboarding runs only once.
+
+### Enable / Disable
+
 | Action | Command |
 |--------|---------|
 | Enable | "enable prompt optimizer" / "开启提示词优化" |
@@ -260,6 +273,7 @@ Output: Before vs. After scores + total improvement + highlights + remaining gap
 ## 🔧 Full Workflow
 
 ```
+0. First use → Onboarding (ask 4 config questions, save state)
 1. Enable → Detect platform capabilities → Load defaults
    ├─ File system available → Template engine ready
    └─ File system unavailable → Auto-switch to LLM-only mode
@@ -300,7 +314,6 @@ prompt-optimizer/
 ├── STANDALONE-GPT.md                 # ChatGPT Custom GPT lite version
 ├── STANDALONE.md                     # Standalone usage guide
 ├── README.md                         # This file
-├── README.zh-CN.md                   # 中文文档
 ├── references/
 │   ├── prompt_library_full.json      # Full version (~10MB)
 │   ├── prompt_library_lite.json      # Lite version (~3MB)
@@ -315,6 +328,7 @@ prompt-optimizer/
 
 ## 🛡️ Features
 
+- **Onboarding** — Quick 4-question setup on first use, saves preferences automatically
 - **Zero API Cost** — Host AI optimizes directly, no extra charges
 - **Auto Platform Detection** — Graceful degradation when file system unavailable
 - **Dual Engine** — Template library + LLM meta-prompting
